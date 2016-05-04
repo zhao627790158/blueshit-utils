@@ -1,4 +1,4 @@
-package cn.zh.blueshit.commonutils;
+package cn.zh.blueshit.common;
 
 
 import org.apache.commons.beanutils.PropertyUtils;
