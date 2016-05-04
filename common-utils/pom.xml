@@ -129,51 +129,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
-
-    <dependency>
-      <groupId>com.jd.common</groupId>
-      <artifactId>jd-common-cached</artifactId>
-      <version>1.1.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>com.jd.common</groupId>
-      <artifactId>jd-common-util</artifactId>
-      <version>1.1.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring</artifactId>
-        </exclusion>
-
-        <exclusion>
-          <groupId>aopalliance</groupId>
-          <artifactId>aopalliance</artifactId>
-        </exclusion>
-
-        <exclusion>
-          <groupId>com.oracle</groupId>
-          <artifactId>ojdbc14</artifactId>
-        </exclusion>
-
-        <exclusion>
-          <groupId>jmagick</groupId>
-          <artifactId>jmagick</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ice</groupId>
-          <artifactId>ice</artifactId>
-        </exclusion>
-
-      </exclusions>
-    </dependency>
   </dependencies>
   <build>
     <finalName>zh-utils</finalName>
