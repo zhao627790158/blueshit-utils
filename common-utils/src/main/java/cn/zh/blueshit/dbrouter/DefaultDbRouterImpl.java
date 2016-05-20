@@ -47,13 +47,13 @@ public class DefaultDbRouterImpl implements DbRouter {
         //获取字符串的hashcode
         int routeFieldInt = RouteUtils.getResourceCode(fieldId);
         String dbKey = getDbKey(dbRuleSetList, routeFieldInt);
-
-        return null;
+        return dbKey;
     }
 
 
     @Override
     public String doRouteByPayId(String resourceCode) {
+        //根据业务的扩展
         return null;
     }
 
@@ -108,6 +108,14 @@ public class DefaultDbRouterImpl implements DbRouter {
         return tableIndex;
     }
 
+    public List<DbRuleSet> getDbRuleSetList() {
+        return dbRuleSetList;
+    }
+
+    public void setDbRuleSetList(List<DbRuleSet> dbRuleSetList) {
+        this.dbRuleSetList = dbRuleSetList;
+    }
+
     private static void main(String[] args) {
         int id = 232311;
         int dbNumber = 10;
@@ -115,8 +123,6 @@ public class DefaultDbRouterImpl implements DbRouter {
         int mode = dbNumber * tableNumber;//取余 绝对比 乘积要小
         int dbIndex = id % mode / tableNumber;
         System.out.println(dbIndex);
-
-
 
     }
 }

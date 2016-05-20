@@ -55,6 +55,7 @@ public class DBRouterInterceptor {
                 if (StringUtils.isNotBlank(routeFieldValue)) {
                     if("payId".equals(routeField) || "orderId".equals(routeField))
                     {
+                        //根据业务拓展
                         dbRouter.doRouteByPayId(routeFieldValue);
                         break;
                     }else
