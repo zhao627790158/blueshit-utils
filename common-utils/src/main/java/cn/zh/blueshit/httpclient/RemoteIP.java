@@ -4,9 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 得到真实地址ip
- * User: gao
- * Date: 11-5-4
- * Time: 上午10:55
  */
 public class RemoteIP {
     public static String getRemoteIP(HttpServletRequest request) {
