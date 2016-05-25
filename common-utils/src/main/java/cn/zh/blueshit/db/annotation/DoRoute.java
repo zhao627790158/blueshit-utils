@@ -1,4 +1,4 @@
-package cn.zh.blueshit.dbrouter.annotation;
+package cn.zh.blueshit.db.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package cn.zh.blueshit.dbrouter;
+package cn.zh.blueshit.db;
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;

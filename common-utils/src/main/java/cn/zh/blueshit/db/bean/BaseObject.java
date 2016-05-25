@@ -1,6 +1,6 @@
-package cn.zh.blueshit.dbrouter.bean;
+package cn.zh.blueshit.db.bean;
 
-import cn.zh.blueshit.dbrouter.DbContextHolder;
+import cn.zh.blueshit.db.DbContextHolder;
 
 import java.io.Serializable;
 

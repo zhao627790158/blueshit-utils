@@ -1,4 +1,4 @@
-package cn.zh.blueshit.dbrouter.bean;
+package cn.zh.blueshit.db.bean;
 
 import java.util.List;
 

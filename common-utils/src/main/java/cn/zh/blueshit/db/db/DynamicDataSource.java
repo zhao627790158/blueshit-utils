@@ -1,6 +1,6 @@
-package cn.zh.blueshit.dbrouter.db;
+package cn.zh.blueshit.db.db;
 
-import cn.zh.blueshit.dbrouter.DbContextHolder;
+import cn.zh.blueshit.db.DbContextHolder;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
@@ -9,7 +9,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
 
-    /*<bean id="mysqlDataSource" class="cn.zh.blueshit.dbrouter.db.DynamicDataSource">
+    /*<bean id="mysqlDataSource" class="cn.zh.blueshit.db.db.DynamicDataSource">
     <property name="targetDataSources">
     <!-- 标识符类型 -->
     <map>

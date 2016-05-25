@@ -1,6 +1,6 @@
-package cn.zh.blueshit.dbrouter;
+package cn.zh.blueshit.db;
 
-import cn.zh.blueshit.dbrouter.annotation.DoRoute;
+import cn.zh.blueshit.db.annotation.DoRoute;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -29,7 +29,7 @@ public class DBRouterInterceptor {
     @Resource
     private DbRouter dbRouter;
 
-    @Pointcut("@annotation((cn.zh.blueshit.dbrouter.annotation.DoRoute))")
+    @Pointcut("@annotation((cn.zh.blueshit.db.annotation.DoRoute))")
     public void aopPoint() {
     }
 

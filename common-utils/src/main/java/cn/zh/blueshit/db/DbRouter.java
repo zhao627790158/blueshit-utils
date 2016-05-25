@@ -1,4 +1,4 @@
-package cn.zh.blueshit.dbrouter;
+package cn.zh.blueshit.db;
 
 /**
  * Created by zhaoheng on 2016/5/20.

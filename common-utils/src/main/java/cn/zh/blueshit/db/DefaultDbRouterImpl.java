@@ -1,6 +1,6 @@
-package cn.zh.blueshit.dbrouter;
+package cn.zh.blueshit.db;
 
-import cn.zh.blueshit.dbrouter.bean.DbRuleSet;
+import cn.zh.blueshit.db.bean.DbRuleSet;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class DefaultDbRouterImpl implements DbRouter {
     private static final Logger log = LoggerFactory.getLogger(DefaultDbRouterImpl.class);
 
 
-    /* <bean id="dBRouter" class="cn.zh.blueshit.dbrouter.DefaultDbRouterImpl">
+    /* <bean id="dBRouter" class="cn.zh.blueshit.db.DefaultDbRouterImpl">
        <property name="dbRuleSetList">
        <!-- 标识符类型 -->
        <list>
@@ -26,7 +26,7 @@ public class DefaultDbRouterImpl implements DbRouter {
        </list>
        </property>
        </bean>
-       <bean id="dbRuleSet" class="cn.zh.blueshit.dbrouter.bean.DbRuleSet">
+       <bean id="dbRuleSet" class="cn.zh.blueshit.db.bean.DbRuleSet">
        <property name="ruleType" value="3"></property>
        <property name="dbNumber" value="3"></property>
        <property name="routeType" value="2"></property>
