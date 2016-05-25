@@ -1,5 +1,9 @@
 package cn.zh.blueshit.security.tool;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * Created by zhaoheng on 2016/5/23.
  */
@@ -37,4 +41,26 @@ public class StringToByteTools {
             return result;
         }
     }
+
+    public static byte[] inputStreamTOByte(InputStream in) throws IOException {
+        short BUFFER_SIZE = 4096;
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        byte[] data = new byte[BUFFER_SIZE];
+        int count1;
+        while ((count1 = in.read(data, 0, BUFFER_SIZE)) != -1) {
+            outStream.write(data, 0, count1);
+        }
+        byte[] outByte = outStream.toByteArray();
+        outStream.close();
+        return outByte;
+    }
+
+    public static String inputStreamTOString(InputStream inputStream) throws IOException {
+        return inputStreamTOString(inputStream, "utf-8");
+    }
+
+    public static String inputStreamTOString(InputStream in, String encoding) throws IOException {
+        return new String(inputStreamTOByte(in), encoding);
+    }
+
 }
