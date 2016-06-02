@@ -9,6 +9,8 @@ import java.util.Arrays;
 
 /**
  * Created by zhaoheng on 2016/6/2.
+ * 适用于 属性不匹配时的对象拷贝
+ *
  */
 public class DozerMapperTest {
 
