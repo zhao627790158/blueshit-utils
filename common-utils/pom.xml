@@ -184,6 +184,11 @@
       <artifactId>cglib-nodep</artifactId>
       <version>2.2</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.zookeeper</groupId>
+      <artifactId>zookeeper</artifactId>
+      <version>3.4.6</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>blueshit-utils</finalName>
