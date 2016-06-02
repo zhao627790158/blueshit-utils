@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by zhaoheng on 2016/4/25.
  */
-public class BeanUtils {
+public class BeanUtils extends org.apache.commons.beanutils.BeanUtils{
     private static final Logger logger = LoggerFactory.getLogger(BeanUtils.class);
 
     public BeanUtils() {
