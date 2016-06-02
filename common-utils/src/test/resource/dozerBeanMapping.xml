@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <stop-on-errors>false</stop-on-errors>
+        <date-format>yyyy-MM-dd HH:mm:ss</date-format>
+        <!-- wildcard默认为true,在此时默认对所有属性进行map，如果为false，则只对在xml文件中配置的属性进行map-->
+        <wildcard>true</wildcard>
+    </configuration>
+
+    <mapping>
+        <class-a>cn.blueshit.cn.test.bean.User</class-a>
+        <class-b>cn.blueshit.cn.test.bean.Customer</class-b>
+        <field>
+            <a>userId</a>
+            <b>customerId</b>
+        </field>
+        <field>
+            <a>userName</a>
+            <b>customerName</b>
+        </field>
+        <field>
+            <a>timeStr</a>
+            <b>time</b>
+        </field>
+    </mapping>
+
+</mappings>

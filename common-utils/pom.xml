@@ -189,6 +189,19 @@
       <artifactId>zookeeper</artifactId>
       <version>3.4.6</version>
     </dependency>
+
+    <!--dozer-->
+    <dependency>
+      <groupId>net.sf.dozer</groupId>
+      <artifactId>dozer</artifactId>
+      <version>5.5.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.dozer</groupId>
+      <artifactId>dozer-spring</artifactId>
+      <version>5.5.1</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>blueshit-utils</finalName>
