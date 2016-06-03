@@ -1,9 +1,10 @@
 package cn.blueshit.cn.test;
 
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.apache.commons.collections.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,8 +13,8 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by zhaoheng on 2016/5/27.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring-config-test.xml")
+/*@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:spring-config-test.xml")*/
 public class Test {
 
 
@@ -33,6 +34,28 @@ public class Test {
             System.out.println("ccccccccc");
         }
 
+
+
+    }
+
+    @org.junit.Test
+    public void testUnion() {
+
+        List<String> testA = new ArrayList<String>();
+        List<String> testB = new ArrayList<String>();
+        for (int i = 0; i < 1000; i++) {
+            if(i==10){
+                continue;
+            }
+            testA.add(i + "-------A");
+            testB.add(i + "-------B");
+        }
+        System.out.println(System.currentTimeMillis());
+        Collection<String> union = CollectionUtils.union(testA, testB);
+        System.out.println(System.currentTimeMillis());
+        for (String s : union) {
+            System.out.println(s);
+        }
 
 
     }
