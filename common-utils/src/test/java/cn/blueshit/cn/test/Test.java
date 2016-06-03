@@ -2,6 +2,7 @@ package cn.blueshit.cn.test;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -57,6 +58,23 @@ public class Test {
             System.out.println(s);
         }
 
+
+    }
+
+    @org.junit.Test
+    public void testCuns() throws InterruptedException {
+
+        Class<?> clazz = null;
+        try {
+            clazz = Class.forName("cn.blueshit.cn.test.bean.Customer");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //取得所有构造函数
+        Constructor<?> cons[] = clazz.getConstructors();
+        for (int i=0;cons.length>i;i++){
+            System.out.println(cons[i]);
+        }
 
     }
 
