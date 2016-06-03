@@ -1,0 +1,57 @@
+//异步执行 多种步骤的操作..执行需要的时间为 子任务中最大时间
+
+//注入一个 threadPoolExecutor
+@Autowired
+private ThreadPoolTaskExecutor threadPoolExecutor11;
+private ThreadPoolTaskExecutor threadPoolExecutor22;
+//创建 callableTask
+public class GetCardTask implements Callable<PaymentProduct> {
+    private static final Logger logger = LoggerFactory.getLogger(GetCardTask.class);
+    private GetCardListService getCardListService;
+    private PaymentRequestBean paymentRequestBean;
+    private PaymentProductResponse paymentProductResponse;
+    @Override
+    public PaymentProduct call()
+    {
+        try{
+            getCardListService.filterProductList(paymentRequestBean,paymentProductResponse);
+            paymentProductResponse.getProductList();
+            if(paymentProductResponse.getProductList().size()>0)
+                return paymentProductResponse.getProductList().get(0);
+            else
+            {
+                logger.info("异步获取卡列表为空,pin"+paymentRequestBean.getPin());
+                         }
+        }catch (Exception e)
+        {
+            logger.error("获取银行卡列表异常,pin"+paymentRequestBean.getPin(), e);
+        }
+        return new PaymentProduct();
+    }
+
+    public GetCardTask(PaymentRequestBean paymentRequestBean, PaymentProductResponse paymentProductResponse, GetCardListService getCardListService) {
+        this.paymentRequestBean = paymentRequestBean;
+        this.paymentProductResponse = paymentProductResponse;
+        this.getCardListService = getCardListService;
+    }
+}
+
+//调用 返回futureTask
+private List<PaymentProduct> getProductList(PaymentRequestBean paymentRequestBean, PaymentProductResponse paymentProductResponse)throws Exception
+    {
+
+        Future<PaymentProduct> cardTaskFuture = threadPoolExecutor11.submit(new GetCardTask(paymentRequestBean, paymentProductResponse,getCardListService));
+        PaymentProduct paymentCardProduct = cardTaskFuture.get(PropertiesConstants.CARD_TASK_TIMEOUT, TimeUnit.MILLISECONDS);
+
+        Future<PaymentProduct> balanceTaskFuture= threadPoolExecutor22.submit(new GetBalanceTask(paymentRequestBean, accountQueryImpl));
+        PaymentProduct paymentBalanceProduct = balanceTaskFuture.get(PropertiesConstants.BALANCE_TASK_TIMEOUT, TimeUnit.MILLISECONDS);
+
+        logger.info("测试"+GsonUtils.toJson(paymentBalanceProduct));
+        List<PaymentProduct> paymentProductList = new ArrayList<PaymentProduct>();
+        if(paymentCardProduct!=null)
+            paymentProductList.add(paymentCardProduct);
+        if(paymentBalanceProduct!=null)
+            paymentProductList.add(paymentBalanceProduct);
+        logger.info("产品列表长度"+paymentProductList.size());
+        return paymentProductList;
+    }
