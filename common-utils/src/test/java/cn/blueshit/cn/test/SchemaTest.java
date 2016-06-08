@@ -1,4 +1,4 @@
-package cn.blueshit.cn.test.bean;
+package cn.blueshit.cn.test;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
