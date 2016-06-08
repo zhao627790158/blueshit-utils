@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://cn.blueShit.com/schema/mybatis-sharding"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://cn.blueShit.com/schema/mybatis-sharding">
+	<xsd:annotation>
+		<xsd:documentation>
+			<![CDATA[
+			测试schema
+			]]>
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="configs">
+		<!--复杂类型-->
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="strategy" minOccurs="1" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="strategy">
+		<xsd:complexType mixed="true">
+			<xsd:attribute name="logicTable" use="required" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>
+						<![CDATA[
+							逻辑表名称
+						]]>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name="class" use="required" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>
+						<![CDATA[
+							规则解析类
+						]]>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
