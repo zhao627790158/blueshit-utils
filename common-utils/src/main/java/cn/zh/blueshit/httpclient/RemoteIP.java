@@ -3,7 +3,7 @@ package cn.zh.blueshit.httpclient;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 得到真实地址ip
+ * 寰楀埌鐪熷疄鍦板潃ip
  */
 public class RemoteIP {
     public static String getRemoteIP(HttpServletRequest request) {
