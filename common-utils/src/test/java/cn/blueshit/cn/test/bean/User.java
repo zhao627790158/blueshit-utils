@@ -10,6 +10,9 @@ public class User {
 
     private String timeStr;
 
+    public User() {
+    }
+
     public String getTimeStr() {
         return timeStr;
     }

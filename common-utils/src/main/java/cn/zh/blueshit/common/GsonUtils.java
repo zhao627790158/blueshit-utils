@@ -17,6 +17,15 @@ public class GsonUtils {
     private static final String JSON_EMPTY_ARRAY = "[]";
     private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+    private static Gson defaultGson;
+
+    static {
+        GsonBuilder builder = new GsonBuilder();
+        builder.setDateFormat(DEFAULT_DATE_PATTERN);
+        defaultGson = builder.create();
+    }
+
+
     public static String toJson(Object target) {
         return toJson(target, (Type) null, (String) null);
     }
@@ -26,16 +35,11 @@ public class GsonUtils {
     }
 
     public static String toJson(Object target, Type targetType, String datePattern) {
+
         if (null == target) {
             return JSON_EMPTY;
         }
-        GsonBuilder builder = new GsonBuilder();
-        if (datePattern == null || datePattern.length() < 1) {
-            datePattern = DEFAULT_DATE_PATTERN;
-        }
-
-        builder.setDateFormat(datePattern);
-        Gson gson = builder.create();
+        Gson gson = getGson(datePattern);
         String result = "{}";
 
         try {
@@ -55,14 +59,7 @@ public class GsonUtils {
 
     public static <T> T fromJson(String json, TypeToken<T> token, String datePattern) {
         if (json != null && json.length() >= 1) {
-            GsonBuilder builder = new GsonBuilder();
-            if (datePattern == null || datePattern.length() < 1) {
-                datePattern = DEFAULT_DATE_PATTERN;
-            }
-
-            builder.setDateFormat(datePattern);
-            Gson gson = builder.create();
-
+            Gson gson = getGson(datePattern);
             try {
                 return gson.fromJson(json, token.getType());
             } catch (Exception var6) {
@@ -76,14 +73,7 @@ public class GsonUtils {
 
     public static Object fromJson(String json, Type type, String datePattern) {
         if (json != null && json.length() >= 1) {
-            GsonBuilder builder = new GsonBuilder();
-            if (datePattern == null || datePattern.length() < 1) {
-                datePattern = DEFAULT_DATE_PATTERN;
-            }
-
-            builder.setDateFormat(datePattern);
-            Gson gson = builder.create();
-
+            Gson gson = getGson(datePattern);
             try {
                 return gson.fromJson(json, type);
             } catch (Exception var6) {
@@ -99,19 +89,12 @@ public class GsonUtils {
     }
 
     public static <T> T fromJson(String json, TypeToken<T> token) {
-        return (T)fromJson(json, (TypeToken) token, (String) null);
+        return (T) fromJson(json, (TypeToken) token, (String) null);
     }
 
     public static <T> T fromJson(String json, Class<T> clazz, String datePattern) {
         if (json != null && json.length() >= 1) {
-            GsonBuilder builder = new GsonBuilder();
-            if (datePattern == null || datePattern.length() < 1) {
-                datePattern = DEFAULT_DATE_PATTERN;
-            }
-
-            builder.setDateFormat(datePattern);
-            Gson gson = builder.create();
-
+            Gson gson = getGson(datePattern);
             try {
                 return gson.fromJson(json, clazz);
             } catch (Exception var6) {
@@ -123,7 +106,17 @@ public class GsonUtils {
     }
 
     public static <T> T fromJson(String json, Class<T> clazz) {
-        return (T)fromJson(json, (Class) clazz, (String) null);
+        return (T) fromJson(json, (Class) clazz, (String) null);
+    }
+
+    public static Gson getGson(String datePattern) {
+        if (datePattern == null || datePattern.length() < 1) {
+            return defaultGson;
+        } else {
+            GsonBuilder builder = new GsonBuilder();
+            builder.setDateFormat(datePattern);
+            return builder.create();
+        }
     }
 
     public static void main(String[] args) {
@@ -140,7 +133,8 @@ public class GsonUtils {
         ArrayList list = new ArrayList();
         list.add(map);
         list.add(map2);
-        String json2 = toJson(list,new TypeToken<List<HashMap>>(){}.getType());
+        String json2 = toJson(list, new TypeToken<List<HashMap>>() {
+        }.getType());
         System.out.println(json2);
         //json--->list<map>
         Object o = fromJson(json2, new TypeToken<List<HashMap>>() {
@@ -148,7 +142,8 @@ public class GsonUtils {
 
         HashMap zhmap = new HashMap();
         zhmap.put("test", "test111");
-        String zh = toJson(zhmap, (new TypeToken<HashMap>(){}).getType(), "yyyy-MM-dd HH:mm:ss");
+        String zh = toJson(zhmap, (new TypeToken<HashMap>() {
+        }).getType(), "yyyy-MM-dd HH:mm:ss");
         System.out.println(zh);
         System.out.println(toJson(zhmap));
 
