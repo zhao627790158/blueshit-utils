@@ -11,6 +11,7 @@ public class User {
     private String timeStr;
 
     public User() {
+        System.out.print("user construct\n");
     }
 
     public String getTimeStr() {
