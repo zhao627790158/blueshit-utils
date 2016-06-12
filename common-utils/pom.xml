@@ -213,6 +213,11 @@
       <version>4.0.24.Final</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.9</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>blueshit-utils</finalName>
