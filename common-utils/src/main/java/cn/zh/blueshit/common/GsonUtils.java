@@ -104,7 +104,7 @@ public class GsonUtils {
     }
 
     public static Gson getGson(String datePattern) {
-        if (datePattern == null || datePattern.length() < 1) {
+        if (datePattern == null || datePattern.length() < 1|| datePattern.equals(DEFAULT_DATE_PATTERN)) {
             return defaultGson;
         } else {
             GsonBuilder builder = new GsonBuilder();

@@ -1,0 +1,2 @@
+此处需要被classload加载,详情查看resteasy源码,学渣说不太清楚
+cn.zh.blueshit.resteasy.GsonJsonProvider
