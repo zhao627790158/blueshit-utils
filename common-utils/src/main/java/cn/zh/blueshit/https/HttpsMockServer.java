@@ -1,5 +1,6 @@
 package cn.zh.blueshit.https;
 
+import javax.net.ServerSocketFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
@@ -8,8 +9,6 @@ import java.security.Key;
 import java.security.SecureRandom;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import javax.net.ServerSocketFactory;
 
 public class HttpsMockServer extends HttpsMockBase {
 
