@@ -90,6 +90,11 @@ public class UnicodeUtil {
         return outBuffer.toString();
     }
 
+
+    public static String fromUnicodeString(String unicodeStr) {
+        return fromUnicode(unicodeStr.toCharArray(), 0, unicodeStr.toCharArray().length, new char[unicodeStr.toCharArray().length]);
+    }
+
     /**
      * 从 Unicode 码转换成编码前的特殊字符串。
      *
