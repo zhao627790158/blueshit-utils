@@ -17,7 +17,7 @@ public class GsonUtils {
     private static final String JSON_EMPTY_ARRAY = "[]";
     private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    private static Gson defaultGson=getGson(DEFAULT_DATE_PATTERN);
+    private static Gson defaultGson=getGson(DEFAULT_DATE_PATTERN,true);
 
 
     public static String toJson(Object target) {
@@ -110,6 +110,16 @@ public class GsonUtils {
             GsonBuilder builder = new GsonBuilder();
             builder.setDateFormat(datePattern);
             return builder.create();
+        }
+    }
+
+    public static Gson getGson(String datePattern, boolean flag) {
+        if(flag){
+            GsonBuilder builder = new GsonBuilder();
+            builder.setDateFormat(datePattern);
+            return builder.create();
+        }else {
+            return null;
         }
     }
 
