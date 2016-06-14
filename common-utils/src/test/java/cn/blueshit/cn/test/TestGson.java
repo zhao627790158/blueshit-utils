@@ -2,8 +2,13 @@ package cn.blueshit.cn.test;
 
 import cn.blueshit.cn.test.bean.DescribeLVBResponse;
 import cn.zh.blueshit.common.GsonUtils;
+import cn.zh.blueshit.httpclient.HttpClient3Utils;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,10 +48,52 @@ public class TestGson {
     }
 
     @org.junit.Test
-    public void testLive() {
+    public void testLive() throws Exception {
         String testStr = "{\"code\":0,\"message\":\"\",\"all_count\":\"2\",\"channelSet\":[{\"channel_id\":\"16093104850682827704\",\"channel_name\":\"\\u6d4b\\u8bd5\\u76f4\\u64ad\",\"channel_status\":\"0\",\"create_time\":\"2016-05-18 10:35:21\"},{\"channel_id\":\"16093425727654976792\",\"channel_name\":\"\\u6211\\u7684\\u6d4b\\u8bd5\\u9891\\u9053\",\"channel_status\":\"0\",\"create_time\":\"2016-06-14 12:37:31\"}]}";
 
         DescribeLVBResponse describeLVBResponse =GsonUtils.fromJson(testStr,DescribeLVBResponse.class);
+        String url = "http://www.jd.com";
+        System.out.println(System.currentTimeMillis());
+        String s = HttpClient3Utils.executeGet(url);
+        System.out.println(System.currentTimeMillis());
+        System.out.println(s);
+        System.out.println(System.currentTimeMillis());
+        URL realUrl = new URL(url);
+        URLConnection connection = null;
+        connection = realUrl.openConnection();
+        // 设置通用的请求属性
+        connection.setRequestProperty("accept", "*/*");
+        connection.setRequestProperty("connection", "Keep-Alive");
+        connection.setRequestProperty("user-agent",
+                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+        // 设置链接主机超时时间
+        connection.setConnectTimeout(1000);
+        // 建立实际的连接
+        connection.connect();
+
+        // 定义 BufferedReader输入流来读取URL的响应
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                connection.getInputStream()));
+
+        String line;
+        String result="";
+        while ((line = in.readLine()) != null) {
+            result += line;
+        }
+        System.out.println(System.currentTimeMillis());
+        System.out.println(result);
+        if (in != null) {
+            in.close();
+        }
+    }
+
+    @org.junit.Test
+    public void testGsonOne() {
+
+        String testString = "{\"message\":\"\",\"all_count\":\"2\",\"channelSet\":[{\"channel_name\":\"测试直播\",\"create_time\":\"2016-05-18 10:35:21\",\"channel_status\":\"0\",\"channel_id\":\"16093104850682827704\"},{\"channel_name\":\"我的测试频道\",\"create_time\":\"2016-06-14 12:37:31\",\"channel_status\":\"0\",\"channel_id\":\"16093425727654976792\"}],\"code\":0}";
+        String channelString = "{\"message\":\"\",\"channelInfo\":[{\"channel_name\":\"我的测试频道\",\"channel_describe\":\"channelDescribe我的测试频道\",\"flv_downstream_address\":\"http://2918.liveplay.myqcloud.com/live/2918_b4e4dd8131e911e6a2cba4dcbef5e35a.flv\",\"hls_downstream_address\":\"http://2918.liveplay.myqcloud.com/2918_b4e4dd8131e911e6a2cba4dcbef5e35a.m3u8\",\"upstream_list\":[{\"sourceID\":\"2918_b4e4dd8131e911e6a2cba4dcbef5e35a\",\"sourceType\":\"1\",\"sourceName\":\"ddd\",\"sourceAddress\":\"rtmp://2918.livepush.myqcloud.com/live/2918_b4e4dd8131e911e6a2cba4dcbef5e35a?bizid=2918\"}],\"channel_status\":\"0\",\"rtmp_downstream_address\":\"rtmp://2918.liveplay.myqcloud.com/live/2918_b4e4dd8131e911e6a2cba4dcbef5e35a\",\"player_id\":\"1147\",\"resolution\":null,\"password\":null,\"channel_id\":\"16093425727654976792\"}],\"code\":0}";
+
+
 
     }
 }

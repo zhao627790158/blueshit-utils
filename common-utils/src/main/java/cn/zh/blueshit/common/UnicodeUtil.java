@@ -2,7 +2,7 @@ package cn.zh.blueshit.common;
 
 /**
  * /**
- * ½øĞĞ×Ö·û²Ù×÷µÄ¹¤¾ßÀà
+ * è¿›è¡Œå­—ç¬¦æ“ä½œçš„å·¥å…·ç±»
  */
 public class UnicodeUtil {
 
@@ -18,11 +18,11 @@ public class UnicodeUtil {
     }
 
     /**
-     * ½«×Ö·û´®±àÂë³É Unicode ¡£
+     * å°†å­—ç¬¦ä¸²ç¼–ç æˆ Unicode ã€‚
      *
-     * @param theString   ´ı×ª»»³ÉUnicode±àÂëµÄ×Ö·û´®¡£
-     * @param escapeSpace ÊÇ·ñºöÂÔ¿Õ¸ñ¡£
-     * @return ·µ»Ø×ª»»ºóUnicode±àÂëµÄ×Ö·û´®¡£
+     * @param theString   å¾…è½¬æ¢æˆUnicodeç¼–ç çš„å­—ç¬¦ä¸²ã€‚
+     * @param escapeSpace æ˜¯å¦å¿½ç•¥ç©ºæ ¼ã€‚
+     * @return è¿”å›è½¬æ¢åUnicodeç¼–ç çš„å­—ç¬¦ä¸²ã€‚
      */
     public static String toUnicode(String theString, boolean escapeSpace) {
         int len = theString.length();
@@ -96,13 +96,13 @@ public class UnicodeUtil {
     }
 
     /**
-     * ´Ó Unicode Âë×ª»»³É±àÂëÇ°µÄÌØÊâ×Ö·û´®¡£
+     * ä» Unicode ç è½¬æ¢æˆç¼–ç å‰çš„ç‰¹æ®Šå­—ç¬¦ä¸²ã€‚
      *
-     * @param in       Unicode±àÂëµÄ×Ö·ûÊı×é¡£
-     * @param off      ×ª»»µÄÆğÊ¼Æ«ÒÆÁ¿¡£
-     * @param len      ×ª»»µÄ×Ö·û³¤¶È¡£
-     * @param convtBuf ×ª»»µÄ»º´æ×Ö·ûÊı×é¡£
-     * @return Íê³É×ª»»£¬·µ»Ø±àÂëÇ°µÄÌØÊâ×Ö·û´®¡£
+     * @param in       Unicodeç¼–ç çš„å­—ç¬¦æ•°ç»„ã€‚
+     * @param off      è½¬æ¢çš„èµ·å§‹åç§»é‡ã€‚
+     * @param len      è½¬æ¢çš„å­—ç¬¦é•¿åº¦ã€‚
+     * @param convtBuf è½¬æ¢çš„ç¼“å­˜å­—ç¬¦æ•°ç»„ã€‚
+     * @return å®Œæˆè½¬æ¢ï¼Œè¿”å›ç¼–ç å‰çš„ç‰¹æ®Šå­—ç¬¦ä¸²ã€‚
      */
     public static String fromUnicode(char[] in, int off, int len, char[] convtBuf) {
         if (convtBuf.length < len) {
@@ -182,7 +182,7 @@ public class UnicodeUtil {
 
 
     public static void main(String[] args) {
-        String testStr = "ÕÔĞ¡ºì";
+        String testStr = "èµµå°çº¢";
         String s = UnicodeUtil.toUnicode(testStr, false);
         System.out.println(s);
         String s1 = UnicodeUtil.fromUnicode(s.toCharArray(), 0, s.toCharArray().length, new char[s.toCharArray().length]);
