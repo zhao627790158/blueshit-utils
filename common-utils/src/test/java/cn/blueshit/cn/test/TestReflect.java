@@ -5,10 +5,13 @@ import cn.zh.blueshit.common.BeanUtils;
 import cn.zh.blueshit.common.FastReflectUtils;
 import cn.zh.blueshit.common.MapUtils;
 import cn.zh.blueshit.common.UnicodeUtil;
+import cn.zh.blueshit.security.HMACSHA1Utils;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
@@ -50,5 +53,13 @@ public class TestReflect {
         System.out.println(UnicodeUtil.fromUnicodeString(nu));
     }
 
+
+    @org.junit.Test
+    public void testSha1() throws NoSuchAlgorithmException, InvalidKeyException {
+        String secretKey = "Gu5t9xGARNpq86cd98joQYCN3Cozk1qA";
+        String srcStr = "GETcvm.api.qcloud.com/v2/index.php?Action=DescribeInstances&Nonce=345122&Region=gz&SecretId=AKIDz8krbsJ5yKBZQpn74WFkmLPx3gnPhESA&Timestamp=1408704141";
+        String signature = HMACSHA1Utils.getSignature(srcStr.getBytes(), secretKey.getBytes());
+        System.out.println(signature);
+    }
 
 }
