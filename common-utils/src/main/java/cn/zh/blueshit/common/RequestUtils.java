@@ -7,6 +7,8 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -19,6 +21,11 @@ public class RequestUtils {
 
 
     private static final Log log = LogFactory.getLog(RequestUtils.class);
+
+    private String ajaxModel;
+    protected String loginUrl="http://www.baidu.com";
+    protected String charsetName = "utf-8";
+    protected String URIEncoding = "utf-8";
 
 
     public RequestUtils() {
@@ -207,6 +214,88 @@ public class RequestUtils {
         return realDomain;
     }
 
+    public boolean isAjaxRequest(HttpServletRequest request) {
+        boolean isAjaxReuest = false;
+        if (this.ajaxModel == null) {
+            if (request.getHeader("X-Requested-With") != null && "XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+                isAjaxReuest = true;
+            }
+        } else {
+            isAjaxReuest = request.getHeader("X-Requested-With") != null;
+        }
+
+        return isAjaxReuest;
+    }
+
+    public void ajaxResponse(HttpServletResponse response) {
+        PrintWriter writer = null;
+
+        try {
+            writer = response.getWriter();
+            writer.write("{\"error\":\"NotLogin\"}");
+        } catch (Exception var12) {
+            log.error("--ajaxResponse error--", var12);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (Exception var11) {
+                    log.error("--ajaxResponse close writer error--", var11);
+                }
+            }
+
+        }
+
+    }
+
+    public void redirect2LoginPage(HttpServletRequest request, HttpServletResponse response) {
+        String returnURL;
+        String encodeReturnURL;
+        try {
+            if (this.isAjaxRequest(request)) {
+                this.ajaxResponse(response);
+                return;
+            }
+
+            String e = RequestUtils.getCurrentUrl(request, this.URIEncoding);
+            returnURL = "";
+
+            try {
+                returnURL = RequestUtils.encode(e, this.charsetName);
+                if (RequestUtils.isSSL(request)) {
+                    returnURL = returnURL.replaceAll("http", "https");
+                }
+            } catch (Exception var9) {
+                log.error("RequestUtils.encodeCurrentUrl error!!" + e + ":" + this.charsetName, var9);
+            }
+
+            encodeReturnURL = getReturnUrl(this.loginUrl, e, returnURL);
+            response.setHeader("Pragma", "No-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expires", 0L);
+            response.sendRedirect(encodeReturnURL);
+        } catch (Exception var10) {
+            returnURL = RequestUtils.getCurrentURL(request);
+            encodeReturnURL = RequestUtils.encode(returnURL, "UTF-8");
+            if (RequestUtils.isSSL(request)) {
+                encodeReturnURL = encodeReturnURL.replaceAll("http", "https");
+            }
+            String redirectURL = getReturnUrl(this.loginUrl, returnURL, encodeReturnURL);
+
+            try {
+                response.sendRedirect(redirectURL);
+            } catch (IOException var8) {
+                log.error("-- redirect to loginPage error for: " + var8.getMessage());
+                throw new RuntimeException(var8);
+            }
+        }
+
+    }
+
+    public static String getReturnUrl(String passportUrl, String returnUrl, String encodeReturnUrl) {
+        return StringUtils.isEmpty(returnUrl) ? passportUrl : passportUrl + "?ReturnUrl=" + encodeReturnUrl;
+    }
+
     public static String getRemoteIp(HttpServletRequest request) {
         if (request == null) {
             return null;
@@ -237,6 +326,37 @@ public class RequestUtils {
         return StringUtils.isNotBlank(protocol) && protocol.trim().equalsIgnoreCase("SSL");
     }
 
+    public String getLoginUrl() {
+        return loginUrl;
+    }
+
+    public void setLoginUrl(String loginUrl) {
+        this.loginUrl = loginUrl;
+    }
+
+    public String getCharsetName() {
+        return charsetName;
+    }
+
+    public void setCharsetName(String charsetName) {
+        this.charsetName = charsetName;
+    }
+
+    public String getURIEncoding() {
+        return URIEncoding;
+    }
+
+    public void setURIEncoding(String URIEncoding) {
+        this.URIEncoding = URIEncoding;
+    }
+
+    public String getAjaxModel() {
+        return ajaxModel;
+    }
+
+    public void setAjaxModel(String ajaxModel) {
+        this.ajaxModel = ajaxModel;
+    }
 
     public static void main(String[] args) {
         String hostStr = "http://www.qq.com";
