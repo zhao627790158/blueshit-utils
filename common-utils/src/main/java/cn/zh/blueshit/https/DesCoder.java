@@ -1,13 +1,12 @@
 package cn.zh.blueshit.https;
 
-import java.security.Key;
-import java.security.SecureRandom;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+import java.security.Key;
+import java.security.SecureRandom;
 
 /**
  * des对称加密-模拟https
@@ -150,7 +149,7 @@ public class DesCoder {
 		return cipher.doFinal(data);
 	}
 
-	private static String showByteArray(byte[] data) {
+	public static String showByteArray(byte[] data) {
 		if (null == data) {
 			return null;
 		}
