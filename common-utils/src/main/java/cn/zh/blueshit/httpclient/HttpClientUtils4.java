@@ -1,49 +1,17 @@
 /*
 package cn.zh.blueshit.httpclient;
 
-
-import com.jd.ebcf.live.common.constants.Constants;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.http.*;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.CoreConnectionPNames;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.net.*;
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-
 */
+
 /**
- * Created by zhaoheng on 2016/6/15.
  * 此处解释下MaxtTotal和DefaultMaxPerRoute的区别：
  * 1、MaxtTotal是整个池子的大小；
  * 2、DefaultMaxPerRoute是根据连接到的主机对MaxTotal的一个细分；比如：
  * MaxtTotal=400 DefaultMaxPerRoute=200
  * 而我只连接到http://sishuok.com时，到这个主机的并发最多只有200；而不是400；
  * 而我连接到http://sishuok.com 和 http://qq.com时，到每个主机的并发最多只有200；即加起来是400（但不能超过400）；所以起作用的设置是DefaultMaxPerRoute。
- *//*
-
+ */
+/*
 public class HttpClientUtils4 {
 
     private static final Logger log = LoggerFactory.getLogger(HttpClientUtils4.class);
@@ -98,6 +66,25 @@ public class HttpClientUtils4 {
         DefaultHttpClient httpClient = new DefaultHttpClient(conMgr, params);
         httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, true));
         return httpClient;
+    }
+
+
+    */
+/**
+     * 向指定的url发送 post数据
+     * 模拟form表单
+     * @param url
+     * @param params
+     * @return
+     *//*
+
+    public static String postDataToUri(String url,Map<String,String> params){
+        List<NameValuePair> data = new ArrayList<NameValuePair>();
+        Set<String> keySet = params.keySet();
+        for(String key : keySet) {
+            data.add(new BasicNameValuePair(key, params.get(key)));
+        }
+        return postDataToUri(url,data);
     }
 
     */
@@ -266,8 +253,27 @@ public class HttpClientUtils4 {
         }
     }
 
-    public static String getDataFromUrl(String url,Integer timeout) {
-        return getDataFromUriWithAuth(url,null,null,null,timeout);
+    //这是组装头部
+    public static Header[] assemblyHeader(Map<String,String> headers){
+        Header[] allHeader= new BasicHeader[headers.size()];
+        int i  = 0;
+        for (String str :headers.keySet()) {
+            allHeader[i] = new BasicHeader(str,headers.get(str));
+            i++;
+        }
+        return allHeader;
+    }
+
+    public static String getDataFromUrl(String url,Map<String,String> headerMap) {
+        return getDataFromUrl(url,assemblyHeader(headerMap));
+    }
+
+    public static String getDataFromUrl(String url, Header[] headers) {
+        return getDataFromUriWithAuth(url, null, null, headers, null);
+    }
+
+    public static String getDataFromUrl(String url,Header[] headers,Integer timeout) {
+        return getDataFromUriWithAuth(url,null,null,headers,timeout);
     }
 
     public static String getDataFromUri(String url, String encoding, Header[] headers, Integer timeout) {
@@ -335,13 +341,13 @@ public class HttpClientUtils4 {
 
     public static void main(String[] args) throws InterruptedException {
         final String url = "http://www.baidu.com";
-        final CountDownLatch countDownLatch = new CountDownLatch(500);
+        final CountDownLatch countDownLatch = new CountDownLatch(100);
         System.out.println("start----"+System.currentTimeMillis());
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 100; i++) {
             Thread thread = new Thread("worker-" + i) {
                 public void run() {
                     try {
-                        String dataFromUrl = HttpClientUtils4.getDataFromUrl(url,5000);
+                        String dataFromUrl = HttpClientUtils4.getDataFromUrl(url,null,5000);
                         System.out.println(Thread.currentThread().getName() + ":" +dataFromUrl.substring(10));
                     } catch (Exception var2) {
                         var2.getStackTrace();
