@@ -32,7 +32,7 @@ public class ImoocDH {
 			KeyFactory receiverKeyFactory = KeyFactory.getInstance("DH");
 			X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(senderPublicKeyEnc);
 			PublicKey receiverPublicKey = receiverKeyFactory.generatePublic(x509EncodedKeySpec);
-			DHParameterSpec dhParameterSpec = ((DHPublicKey)receiverPublicKey).getParams();
+			DHParameterSpec dhParameterSpec = ((DHPublicKey)receiverPublicKey).getParams();//需要从发送方的数据中获取数据来生成自己的秘钥
 			KeyPairGenerator receiverKeyPairGenerator = KeyPairGenerator.getInstance("DH");
 			receiverKeyPairGenerator.initialize(dhParameterSpec);
 			KeyPair receiverKeypair = receiverKeyPairGenerator.generateKeyPair();
