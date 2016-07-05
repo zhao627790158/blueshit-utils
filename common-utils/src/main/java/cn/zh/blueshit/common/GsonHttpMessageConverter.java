@@ -20,10 +20,9 @@ import java.nio.charset.Charset;
  */
 public class GsonHttpMessageConverter extends AbstractHttpMessageConverter<Object> {
 
-    public final static Charset UTF8     = Charset.forName("UTF-8");
+    public final static Charset UTF8 = Charset.forName("UTF-8");
 
     private Charset charset = UTF8;
-
 
 
     public GsonHttpMessageConverter() {
@@ -40,13 +39,25 @@ public class GsonHttpMessageConverter extends AbstractHttpMessageConverter<Objec
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         InputStream in = inputMessage.getBody();
         byte[] buf = new byte[1024];
-        while(in.read(buf)!=-1) {
-            if (in.read(buf) > 0) {
-                baos.write(buf,0,in.read(buf));
+        for (; ; ) {
+            int len = in.read(buf);
+            if (len == -1) {
+                break;
+            }
+            if (len > 0) {
+                baos.write(buf, 0, len);
             }
         }
         byte[] bytes = baos.toByteArray();
-        return GsonUtils.fromJson(new String(bytes,UTF8),clazz);
+        Object o = GsonUtils.fromJson(new String(bytes, UTF8), clazz);
+        if (o == null) {
+            try {
+                o = clazz.newInstance();
+            } catch (Exception e) {
+                logger.info("GsonHttpMessageConverter converter error");
+            }
+        }
+        return o;
     }
 
     @Override
