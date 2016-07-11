@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by zhaoheng on 2016/7/11.
- * 利用LinkedHashMap实现简单的缓存， 必须实现removeEldestEntry方法，具体参见JDK文档
+ * 利用LinkedHashMap实现简单的缓存， 必须实现removeEldestEntry方法
  * 按插入顺序的链表，和按访问顺序(调用get方法)的链表。
  * 默认是按插入顺序排序，如果指定按访问顺序排序，那么调用get方法后，会将这次访问的元素移至链表尾部，不断访问可以形成按访问顺序排序的链表
  * 可以重写removeEldestEntry方法返回true值指定插入元素时移除最老的元素
