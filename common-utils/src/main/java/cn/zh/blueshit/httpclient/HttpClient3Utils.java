@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by zhaoheng on 2016/6/14.
@@ -95,6 +96,28 @@ public class HttpClient3Utils {
             }
         }
         return result;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        final String url = "http://10.13.22.47/bl/seq/getNextVal?sequenceName=seq_orderinfo";
+        final CountDownLatch countDownLatch = new CountDownLatch(10000);
+        System.out.println("start----"+System.currentTimeMillis());
+        for (int i = 0; i < 10000; i++) {
+            Thread thread = new Thread("worker-" + i) {
+                public void run() {
+                    try {
+                        String dataFromUrl = HttpClient3Utils.executeGet(url);
+                        System.out.println(Thread.currentThread().getName() + "--" +dataFromUrl);
+                    } catch (Exception var2) {
+                        var2.getStackTrace();
+                    }
+                    countDownLatch.countDown();
+                }
+            };
+            thread.start();
+        }
+        countDownLatch.await();
+        System.out.println("end----"+System.currentTimeMillis());
     }
 
 }
