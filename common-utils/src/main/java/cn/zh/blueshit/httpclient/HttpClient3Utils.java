@@ -12,10 +12,7 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -98,16 +95,21 @@ public class HttpClient3Utils {
         return result;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         final String url = "http://10.13.22.47/bl/seq/getNextVal?sequenceName=seq_orderinfo";
-        final CountDownLatch countDownLatch = new CountDownLatch(10000);
+        String fileUrl = "D:\\workspace\\jmtext.txt";
+        final FileWriter writer = new FileWriter(fileUrl, true);
+        final CountDownLatch countDownLatch = new CountDownLatch(500);
         System.out.println("start----"+System.currentTimeMillis());
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 500; i++) {
             Thread thread = new Thread("worker-" + i) {
                 public void run() {
                     try {
-                        String dataFromUrl = HttpClient3Utils.executeGet(url);
-                        System.out.println(Thread.currentThread().getName() + "--" +dataFromUrl);
+                        for(int j=0;j<5000;j++){
+                            String dataFromUrl = HttpClient3Utils.executeGet(url);
+                            //打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
+                            writer.write(dataFromUrl+"\n");
+                        }
                     } catch (Exception var2) {
                         var2.getStackTrace();
                     }
@@ -117,6 +119,7 @@ public class HttpClient3Utils {
             thread.start();
         }
         countDownLatch.await();
+        writer.close();
         System.out.println("end----"+System.currentTimeMillis());
     }
 
