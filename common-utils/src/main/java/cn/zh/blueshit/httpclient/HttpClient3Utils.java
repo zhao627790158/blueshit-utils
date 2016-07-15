@@ -105,7 +105,7 @@ public class HttpClient3Utils {
             Thread thread = new Thread("worker-" + i) {
                 public void run() {
                     try {
-                        for(int j=0;j<5000;j++){
+                        for(int j=0;j<1000;j++){
                             String dataFromUrl = HttpClient3Utils.executeGet(url);
                             //打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
                             writer.write(dataFromUrl+"\n");
