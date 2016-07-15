@@ -24,7 +24,7 @@ public class TestNode {
         //将原链表的头节点的下一个节点置为null，再将反转后的头节点赋给head
         head.setNextNode(null);
         head = pre;
-        return head;
+        return head;//反转链表
     }
 
 
