@@ -48,6 +48,7 @@ public class HttpsMockServer extends HttpsMockBase {
 
 		// 第一步 获取客户端发送的支持的验证规则，包括hash算法，这里选用SHA1作为hash
 		int length = in.readInt();
+		//跳过4个字节 以为这里默认为le sha1所以跳过4个字节
 		in.skipBytes(4);
 		byte[] clientSupportHash = SocketUtils.readBytes(in, length);
 		String clientHash = new String(clientSupportHash);
