@@ -7,6 +7,13 @@ import java.util.Date;
  */
 public class Man extends User {
 
+    private static Man man = new Man();
+    public static Long test = 100L;
+
+    public Man() {
+        super();
+        System.out.println("man................");
+    }
 
     public void test(String name, int age, Date date) {
         System.out.println(name +"--"+age+"--"+date.toString());

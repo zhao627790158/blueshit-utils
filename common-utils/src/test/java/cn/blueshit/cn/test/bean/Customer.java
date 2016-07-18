@@ -72,4 +72,8 @@ public class Customer {
                 ", time=" + time +
                 '}';
     }
+    public static  void main(String[] args){
+
+        System.out.println(Man.test);
+    }
 }
