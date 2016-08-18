@@ -279,10 +279,17 @@
             <artifactId>lombok</artifactId>
             <version>1.16.6</version>
         </dependency>
+        <!--版本比较-->
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-artifact</artifactId>
             <version>3.3.9</version>
+        </dependency>
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.12</version>
         </dependency>
 
     </dependencies>
