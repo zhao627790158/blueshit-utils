@@ -6,6 +6,8 @@ import cn.zh.blueshit.common.FastReflectUtils;
 import cn.zh.blueshit.common.MapUtils;
 import cn.zh.blueshit.common.UnicodeUtil;
 import cn.zh.blueshit.security.HMACSHA1Utils;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -14,6 +16,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,8 +43,8 @@ public class TestReflect {
         Map map = BeanUtils.convertObject2Map(man);
         String userName1 = MapUtils.getString(map, "userName");
 
-        String[] test1 = new String[]{"1", "2", "3","4"};
-        String[] strings = Arrays.copyOf(test1,test1.length>3?3:test1.length);
+        String[] test1 = new String[]{"1", "2", "3", "4"};
+        String[] strings = Arrays.copyOf(test1, test1.length > 3 ? 3 : test1.length);
         System.out.println(test1.length);
 
         for (String s : strings) {
@@ -60,6 +63,15 @@ public class TestReflect {
         String srcStr = "GETcvm.api.qcloud.com/v2/index.php?Action=DescribeInstances&Nonce=345122&Region=gz&SecretId=AKIDz8krbsJ5yKBZQpn74WFkmLPx3gnPhESA&Timestamp=1408704141";
         String signature = HMACSHA1Utils.getSignature(srcStr.getBytes(), secretKey.getBytes());
         System.out.println(signature);
+    }
+
+    @org.junit.Test
+    public void testGson() {
+        List<Integer> objects = Lists.newArrayList();
+        for (int i = 0; i < 10; i++) {
+            objects.add(i);
+        }
+        System.out.println(Joiner.on(",,").join(objects));
     }
 
 }

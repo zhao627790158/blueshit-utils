@@ -3,6 +3,10 @@ package cn.zh.blueshit.db.db;
 import cn.zh.blueshit.db.DbContextHolder;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
+import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
+
+
 /**
  * Created by zhaoheng on 2016/5/20.
  */
@@ -23,5 +27,10 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     @Override
     protected Object determineCurrentLookupKey() {
          return DbContextHolder.getDbKey();
+    }
+
+    @Override
+    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        return null;
     }
 }
