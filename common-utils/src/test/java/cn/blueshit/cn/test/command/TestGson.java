@@ -32,6 +32,15 @@ public class TestGson {
         System.out.println(test);
     }
 
+
+    @Test
+    public void test7() {
+        List<String> list = new ArrayList<String>();
+        printf(List.class.isAssignableFrom(List.class));
+        printf(list.getClass().isAssignableFrom(List.class));
+        printf(list.getClass().isAssignableFrom(ArrayList.class));
+    }
+
     @Test
     public void test6() throws Exception {
         System.out.println(URLEncoder.encode("%#=", "utf-8"));
@@ -40,7 +49,8 @@ public class TestGson {
         ArrayList<Integer> integers = Lists.newArrayList(1, 2, 3, 4, 5, 6);
         String test = JSON.toJSONString(integers);
         System.out.println(test);
-        List<Integer> list = JSON.parseObject(test, new TypeReference<List<Integer>>(){}.getType());
+        List<Integer> list = JSON.parseObject(test, new TypeReference<List<Integer>>() {
+        }.getType());
         printf(list.size());
 
     }
