@@ -4,6 +4,7 @@ import com.netflix.hystrix.*;
 import lombok.extern.slf4j.Slf4j;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
 import rx.functions.Action1;
 
 /**
@@ -41,6 +42,7 @@ public class HelloWorldCommand extends HystrixCommand<String> {
     protected String run() throws Exception {
 
         Thread.sleep(500);
+        int i = 1 / 0;
         return "Hello " + name + " thread:" + Thread.currentThread().getName() + " group"
                 + this.getCommandGroup().name() + " key" + this.getCommandKey().name();
     }
@@ -54,23 +56,30 @@ public class HelloWorldCommand extends HystrixCommand<String> {
     public static void main(String[] args) throws Exception {
         //每个Command对象只能调用一次,不可以重复调用,
         //重复调用对应异常信息:This instance can only be executed once. Please instantiate a new instance.
-        HelloWorldCommand helloWorldCommand = new HelloWorldCommand("group","commandKey",100);
+        HelloWorldCommand helloWorldCommand = null;
+        try {
+            helloWorldCommand=new HelloWorldCommand("group", "commandKey", 100);
+        } catch (Throwable throwable) {
+            log.error("11111111111");
+        }
+
         //观察执行状态
         Observable<String> observe = helloWorldCommand.observe();
-        observe.subscribe(new Action1<String>() {
+        Subscription subscribe = observe.subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
                 log.info("Command called. Result is:{}", s);
             }
         });
         Thread.sleep(1000);
+        //String result = helloWorldCommand.execute();
        /* //使用execute()同步调用代码,效果等同于:helloWorldCommand.queue().get();
         String result = helloWorldCommand.execute();
         System.out.println("result=" + result);
         */
 
-        HelloWorldCommand helloWorldCommand1 = new HelloWorldCommand("group","commandKey",100);
-        Observable<String> observe1 = helloWorldCommand.observe();
+        HelloWorldCommand helloWorldCommand1 = new HelloWorldCommand("group", "commandKey", 100);
+        Observable<String> observe1 = helloWorldCommand1.observe();
         observe1.subscribe(new Observer<String>() {
             @Override
             public void onCompleted() {

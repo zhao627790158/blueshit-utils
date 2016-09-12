@@ -32,6 +32,12 @@ public class TestGson {
         System.out.println(test);
     }
 
+    public List change(List list) {
+        //list = Lists.newArrayList();
+        list.add("2");
+        return list;
+    }
+
 
     @Test
     public void test7() {
@@ -39,6 +45,9 @@ public class TestGson {
         printf(List.class.isAssignableFrom(List.class));
         printf(list.getClass().isAssignableFrom(List.class));
         printf(list.getClass().isAssignableFrom(ArrayList.class));
+        List<String> test1 = Lists.newArrayList("1", "2");
+        change(test1);
+        System.out.print(test1.size());
     }
 
     @Test
@@ -130,13 +139,13 @@ public class TestGson {
     @Test
     public void test4() {
         List<Integer> list = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7);
-        final List<Integer> integers = Lists.newArrayList(1, 2, 3, 8);
+        final List<Integer> integers = Lists.newArrayList(2, 3, 8);
 
         //在list2也包含的
         CollectionUtils.filter(list, new Predicate<Integer>() {
             @Override
             public boolean evaluate(Integer object) {
-                return integers.contains(object);
+                return integers.contains(object.intValue());
             }
         });
         log.info("结果-integers-:{}", JSON.toJSONString(integers));

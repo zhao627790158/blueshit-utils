@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 public class TestCommand {
 
     private static ThreadPoolExecutor threadPoolExecutor =
-            new ThreadPoolExecutor(50, 10, 2, TimeUnit.SECONDS,
+            new ThreadPoolExecutor(5, 10, 2, TimeUnit.SECONDS,
                     new ArrayBlockingQueue<Runnable>(2), new ThreadPoolExecutor.DiscardPolicy());
 
     private static volatile boolean flag = false;
@@ -32,14 +32,23 @@ public class TestCommand {
                 count.countDown();
             }
         });
-        HelloWorldCommand helloWorldCommand = new HelloWorldCommand("group", "key", 100);
-        Future<String> queue = helloWorldCommand.queue();
-        while (count.getCount() != 0) {
-            log.info("isSuccessfulExecution:" + helloWorldCommand.isSuccessfulExecution() + "-" + threadPoolExecutor.getActiveCount());
-            log.info("isFailedExecution:" + helloWorldCommand.isFailedExecution());
-            Thread.sleep(500);
+        HelloWorldCommand helloWorldCommand = new HelloWorldCommand("group", "key", 1000);
+        try {
+            Future<String> queue = helloWorldCommand.queue();
+            while (count.getCount() != 0) {
+                log.info("isSuccessfulExecution:" + helloWorldCommand.isSuccessfulExecution() + "-" + threadPoolExecutor.getActiveCount());
+                log.info("isFailedExecution:" + helloWorldCommand.isFailedExecution());
+                Thread.sleep(500);
+            }
+            log.error("ee" + queue.get() + "core count");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        ;
-        log.error("ee" + queue.get() + "core count");
+
+        //getFailedExecutionException pass isFailedExecution
+        if (null == helloWorldCommand.getExecutionException() || null == helloWorldCommand.getExecutionException().getMessage()) {
+            log.info("fallback111:{}", null == helloWorldCommand.getExecutionException().getMessage());
+        }
+
     }
 }
