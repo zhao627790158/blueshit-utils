@@ -20,6 +20,7 @@ public class VersionUtil {
     public static void main(String[] args) {
         System.out.println(VersionUtil.compare("1.1", "1.0"));
         System.out.println(VersionUtil.compare("1-1", "1-0"));
+        System.out.println(VersionUtil.compare("7.4.0", "7.4"));
     }
 
 
