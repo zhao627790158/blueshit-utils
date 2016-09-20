@@ -38,24 +38,6 @@ public class TestGson {
         return list;
     }
 
-    @Test
-    public void test8() {
-        for (int i = 1; i < 10; i++) {
-            printf(i + "----+++++");
-            switch (i) {
-                case 1:
-                    printf(i);
-                    break;
-                case 2:
-                    printf(i);
-                    break;
-                default:
-                    break;
-            }
-            break;
-        }
-    }
-
 
     @Test
     public void test7() {
