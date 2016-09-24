@@ -1,5 +1,6 @@
 package cn.blueshit.cn.test.command;
 
+import cn.blueshit.cn.test.bean.User;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
@@ -38,6 +39,34 @@ public class TestGson {
         return list;
     }
 
+    @Test
+    public void test8() {
+        final List<User> users = Lists.newArrayList();
+        User user = new User(100);
+        User user1 = new User(200);
+        users.add(user);
+        users.add(user1);
+        testUser(users);
+
+        final List<User> users1 = Lists.newArrayList();
+        users1.addAll(users);
+
+        printf(users.size());
+
+
+    }
+
+    public static void testUser(List<User> users) {
+
+        final List<Integer> cons = Collections.emptyList();
+        CollectionUtils.filter(users, new Predicate<User>() {
+            @Override
+            public boolean evaluate(User object) {
+                return cons.contains(object.getUserId());
+            }
+        });
+
+    }
 
     @Test
     public void test7() {

@@ -14,6 +14,10 @@ public class User {
         System.out.print("user construct\n");
     }
 
+    public User(int userId) {
+        this.userId = userId;
+    }
+
     public String getTimeStr() {
         return timeStr;
     }
