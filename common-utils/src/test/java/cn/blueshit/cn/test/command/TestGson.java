@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
@@ -21,6 +22,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /**
  * Created by zhaoheng on 16/8/17.
@@ -37,6 +39,15 @@ public class TestGson {
         //list = Lists.newArrayList();
         list.add("2");
         return list;
+    }
+
+    public void test9() {
+
+    }
+
+    public static boolean validateMobilePhoneNumber(String phone) {
+        Pattern p = Pattern.compile("[0-9]{11}");
+        return p.matcher(phone).find();
     }
 
     @Test
