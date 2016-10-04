@@ -10,13 +10,17 @@ import java.util.Date;
  */
 public class Customer {
 
-    @Max(value =10,message = "不能超过10")
+    @Max(value = 10, message = "不能超过10")
     private int customerId;
 
     @NotBlank(message = "用户名不能为空")
     private String customerName;
 
     private Date time;
+
+    static {
+        System.out.println("类初始化");
+    }
 
 
     public Customer() {
@@ -72,7 +76,8 @@ public class Customer {
                 ", time=" + time +
                 '}';
     }
-    public static  void main(String[] args){
+
+    public static void main(String[] args) {
 
         System.out.println(Man.test);
     }

@@ -66,33 +66,36 @@ public class DefaultDbRouterImpl implements DbRouter {
         String dbKey = null;
         //根据配置文件中的 路由规则来生产key
         for (DbRuleSet dbRuleSet1 : ruleSets) {
-            if (dbRuleSet.getDbKeyArray() != null && dbRuleSet.getDbNumber() != 0) {
-                long dbIndex = 0;
-                long tbIndex = 0;
-                //默认按照分库进行计算
-                long mode = dbRuleSet.getDbNumber();
-                //如果是按照分库分表的话，计算
-                if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_DBANDTABLE && dbRuleSet1.getTableNumber() != 0) {
-                    mode = dbRuleSet.getDbNumber() * dbRuleSet1.getTableNumber();
-                    dbIndex = routeFieldInt % mode / dbRuleSet1.getTableNumber();
-                    tbIndex = routeFieldInt % dbRuleSet1.getTableNumber();
-                    String tableIndex = getFormateTableIndex(dbRuleSet1.getTableIndexStyle(), tbIndex);
-                    DbContextHolder.setTableIndex(tableIndex);
-                    log.info("tableIndex{}", tableIndex);
-                } else if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_DB) {
-                    mode = dbRuleSet.getDbNumber();
-                    dbIndex = routeFieldInt % mode;
-                } else if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_TABLE) {
-                    tbIndex = routeFieldInt % dbRuleSet1.getTableNumber();
-                    String tableIndex = getFormateTableIndex(dbRuleSet1.getTableIndexStyle(), tbIndex);
-                    DbContextHolder.setTableIndex(tableIndex);
-                    log.info("tableIndex{}", tableIndex);
+            if (dbRuleSet1.getRuleType() == DbRuleSet.RULE_TYPE_STR) {
+                dbRuleSet = dbRuleSet1;
+                if (dbRuleSet.getDbKeyArray() != null && dbRuleSet.getDbNumber() != 0) {
+                    long dbIndex = 0;
+                    long tbIndex = 0;
+                    //默认按照分库进行计算
+                    long mode = dbRuleSet.getDbNumber();
+                    //如果是按照分库分表的话，计算
+                    if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_DBANDTABLE && dbRuleSet1.getTableNumber() != 0) {
+                        mode = dbRuleSet.getDbNumber() * dbRuleSet1.getTableNumber();
+                        dbIndex = routeFieldInt % mode / dbRuleSet1.getTableNumber();
+                        tbIndex = routeFieldInt % dbRuleSet1.getTableNumber();
+                        String tableIndex = getFormateTableIndex(dbRuleSet1.getTableIndexStyle(), tbIndex);
+                        DbContextHolder.setTableIndex(tableIndex);
+                        log.info("tableIndex:{}", tableIndex);
+                    } else if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_DB) {
+                        mode = dbRuleSet.getDbNumber();
+                        dbIndex = routeFieldInt % mode;
+                    } else if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_TABLE) {
+                        tbIndex = routeFieldInt % dbRuleSet1.getTableNumber();
+                        String tableIndex = getFormateTableIndex(dbRuleSet1.getTableIndexStyle(), tbIndex);
+                        DbContextHolder.setTableIndex(tableIndex);
+                        log.info("tableIndex:{}", tableIndex);
+                    }
+                    dbKey = dbRuleSet.getDbKeyArray().get(Long.valueOf(dbIndex).intValue());
+                    log.info("dbkey{}", dbKey);
+                    DbContextHolder.setDbKey(dbKey);
                 }
-                dbKey = dbRuleSet.getDbKeyArray().get(Long.valueOf(dbIndex).intValue());
-                log.info("dbkey{}", dbKey);
-                DbContextHolder.setDbKey(dbKey);
+                break;
             }
-            break;
         }
         return dbKey;
     }
