@@ -30,12 +30,36 @@ public class TestCondition {
         new Thread(new PrintCTask()).start();
     }
 
+    /**
+     * b获取锁
+     * b释放锁-去等待
+     * a获取锁
+     * a
+     * a获取锁
+     * a释放锁-去等待
+     * c获取锁
+     * c释放锁-去等待
+     * b  //打印完b后 b又获取到了锁 即,又lock()成功了
+     * b获取锁
+     * b释放锁-去等待
+     * c //打印完c后 c又获取到了锁 即,又lock()成功了
+     * c获取锁
+     * c释放锁-去等待
+     * a
+     * a获取锁
+     * a释放锁-去等待
+     * b
+     * b获取锁
+     * b释放锁-去等待
+     * c
+     */
+
     public static class PrintATask implements Runnable {
         @Override
         public void run() {
             while (true) {
                 try {
-                    LOCK.lock();
+                    LOCK.lock();//观察可以发现 a被打印后,a可以再次获取锁成功 体现出了偏向锁的概念
                     System.out.println("a获取锁");
                     while (!canPrintA) {
                         System.out.println("a释放锁-去等待");
