@@ -2,6 +2,9 @@ package cn.blueshit.cn.test.current;
 
 import cn.zh.blueshit.excel.ExcelTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -23,11 +26,16 @@ public class TestCondition {
     private static volatile boolean canPrintC = false;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        Map<String, Object> hashMap = new HashMap<String, Object>();
         new Thread(new PrintBTask()).start();
         new Thread(new PrintATask()).start();
 
         new Thread(new PrintCTask()).start();
+        for (int i = 0; i < 1000; i++) {
+            hashMap.put(i + "", i);
+        }
+        Thread.sleep(1000 * 10);
     }
 
     /**
