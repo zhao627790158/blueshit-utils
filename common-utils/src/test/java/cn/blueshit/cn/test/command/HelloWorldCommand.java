@@ -41,8 +41,8 @@ public class HelloWorldCommand extends HystrixCommand<String> {
     @Override
     protected String run() throws Exception {
 
-        Thread.sleep(500);
-        int i = 1 / 0;
+        /*Thread.sleep(500);
+        int i = 1 / 0;*/
         return "Hello " + name + " thread:" + Thread.currentThread().getName() + " group"
                 + this.getCommandGroup().name() + " key" + this.getCommandKey().name();
     }
