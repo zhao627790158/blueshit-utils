@@ -6,14 +6,33 @@ package cn.blueshit.cn.test.datastructures;
  */
 public class BubbleSort {
 
-    private static final int[] test = new int[]{1, 2, 4, 6, 7, 4, 4, 9, 7, 7, 232};
+    private static final int[] test = new int[]{49, 38, 65};
+    ;
 
     public static void bubbleSort(int[] a, MySort mySort) {
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i + 1; j > a.length; j++) {
-                mySort.sort(a[i], a[j]);
+        for (int i = 0; i < a.length - 1; i++) {
+            for (int j = i + 1; j < a.length; j++) {
+                if (a[i] > a[j]) {
+                    int temp = a[j];
+                    a[j] = a[i];
+                    a[i] = temp;
+                }
             }
         }
+    }
+
+    public static void bubbleSort2(int[] a) {
+        for (int i = a.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (a[j] > a[j + 1]) {
+                    int temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+            }
+        }
+
+
     }
 
     public static void print() {
@@ -23,38 +42,19 @@ public class BubbleSort {
     }
 
     public static void main(String[] args) {
-        //从大到小
-        bubbleSort(test, new bigSort());
-        print();
-        System.out.println("----------");
-        //从小到到
         bubbleSort(test, new littleSort());
+        print();
+        System.out.println("---");
+        bubbleSort2(test);
         print();
     }
 }
 
 interface MySort {
-    void sort(int i, int j);
 }
 
 class bigSort implements MySort {
-    public void sort(int i, int j) {
-        if (j > i) {
-            int temp = j;
-            j = i;
-            i = temp;
-        }
-
-    }
 }
 
 class littleSort implements MySort {
-    public void sort(int i, int j) {
-        if (i > j) {
-            int temp = j;
-            j = i;
-            i = temp;
-        }
-
-    }
 }
