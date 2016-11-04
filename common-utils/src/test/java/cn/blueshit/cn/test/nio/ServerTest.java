@@ -65,6 +65,10 @@ public class ServerTest {
                                 //只回复给自己
                                 schannel.write(charset.encode(("\nserver:" + msg + "\n")));
                             } else {
+                                //!!!一定要close不然服务端close_wait过多,会严重影响并发量
+                                //read返回-1说明客户端的数据发送完毕，并且主动的close socket。所以在这种场景下，你需要关闭socketChannel并且取消key，最好是退出当前函数。
+                                // 注意，这个时候服务端要是继续使用该socketChannel进行读操作的话，就会抛出“远程主机强迫关闭一个现有的连接”的IO异常。
+                                schannel.close();
                                 System.out.println("客户端关闭");
                                 key.cancel();
                             }
