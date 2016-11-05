@@ -3,7 +3,7 @@ package cn.blueshit.cn.test.datastructures;
 /**
  * Created by zhaoheng on 16/11/3.
  */
-public class MergeSort {
+public class MergeSort implements BlSort {
 
 
     public static void main(String[] args) {
@@ -68,4 +68,9 @@ public class MergeSort {
     }
 
 
+    @Override
+    public int[] sort(int[] array) {
+        mergeSort(array);
+        return array;
+    }
 }
