@@ -8,6 +8,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -31,6 +33,27 @@ import java.util.regex.Pattern;
 public class TestGson {
 
 
+    @Test
+    public void test11() {
+        String test = String.format("%s  %d", 1, 1);
+        System.out.println(test);
+        Person p1 = new Person("001", "zhang_san");
+        Person p2 = new Person("002", "li_si");
+        Map<Integer, Person> datePriceMap = Maps.newHashMap();
+        datePriceMap.put(20161101, p1);
+        datePriceMap.put(20161102, p2);
+        Iterable<String> transform = Iterables.transform(datePriceMap.entrySet(), new Function<Map.Entry<Integer, Person>, String>() {
+            @Override
+            public String apply(Map.Entry<Integer, Person> input) {
+                return input.getKey().toString();
+            }
+        });
+        Iterator<String> iterator = transform.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+
     private static void printf(Object test) {
         System.out.println(test);
     }
@@ -41,8 +64,15 @@ public class TestGson {
         return list;
     }
 
+    @Test
     public void test9() {
+        User user = null;
+        testRepace(user);
+        System.out.println(user);
+    }
 
+    public void testRepace(User user) {
+        user = new User(200);
     }
 
     public static boolean validateMobilePhoneNumber(String phone) {
