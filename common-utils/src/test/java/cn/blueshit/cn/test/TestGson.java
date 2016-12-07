@@ -21,6 +21,35 @@ import java.util.*;
  */
 public class TestGson {
 
+    static List<String> testList = Lists.newCopyOnWriteArrayList();
+
+    @Test
+    public void test5() {
+
+        testList.add("1");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (String str : testList) {
+                    System.out.println(str);
+                }
+
+            }
+        });
+        thread.start();
+        try {
+            Thread.currentThread().sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        testList.add("2");
+
+        for (String str : testList) {
+            System.out.println(str);
+        }
+
+    }
 
     @org.junit.Test
     public void test4() {
