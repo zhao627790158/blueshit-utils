@@ -18,7 +18,7 @@ public  class SpringUtils implements BeanFactoryPostProcessor {
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
-        SpringUtils.beanFactory = beanFactory;
+        SpringUtils.beanFactory = configurableListableBeanFactory;
     }
 
     /**
