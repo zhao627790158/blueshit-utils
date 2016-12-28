@@ -72,7 +72,7 @@ public class ClientTest {
             System.out.println(sb.toString());
         } catch (UnknownHostException e) {
             e.printStackTrace();
-        } catch (IOException | InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {

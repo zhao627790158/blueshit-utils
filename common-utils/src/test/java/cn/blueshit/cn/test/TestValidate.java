@@ -13,14 +13,28 @@ import javax.crypto.SecretKey;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by zhaoheng on 2016/6/22.
  */
 public class TestValidate {
+
+    public void test111() {
+        //请记住PECS原则：生产者（Producer）使用extends，消费者（Consumer）使用super。
+        //extends 主要是可以控制读时的类型
+        List<? extends Number> foo3 = new ArrayList<Integer>();
+        Number number = foo3.get(1);//get 来消费数据
+
+        //super可以控制写入时的类型
+        List<? super Integer> foo4 = new ArrayList<Integer>();
+        foo4.add(new Integer(1));//add操作  生成数据
+
+    }
 
 
     @org.junit.Test
@@ -31,7 +45,7 @@ public class TestValidate {
         customer2.setCustomerId(20);
         Customer customer3 = new Customer();
         customer3.setCustomerId(5);
-        List<Customer> list = Lists.newArrayList(customer, customer2,customer3);
+        List<Customer> list = Lists.newArrayList(customer, customer2, customer3);
 
         for (Customer c : list) {
             System.out.println(c.getCustomerId());
@@ -52,7 +66,7 @@ public class TestValidate {
             }
         });*/
 
-        List<String> tilteList = Lists.newArrayList("旅游","接送","nn");
+        List<String> tilteList = Lists.newArrayList("旅游", "接送", "nn");
         String keyTitle = "点击查看礼包详情";
         if (CollectionUtils.isNotEmpty(tilteList)) {
             switch (tilteList.size()) {
