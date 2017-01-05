@@ -23,6 +23,7 @@ public class TestBlockDeque {
         Future submitOffer = executor.submit(new CallBackOffer(started, deque));
 
         Future submitPoll = executor.submit(new CallBackPoll(started, deque));
+
         printf(submitOffer.get());
         printf(started.elapsed(TimeUnit.MICROSECONDS));
         printf(submitPoll.get());

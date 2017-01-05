@@ -1,4 +1,4 @@
-package com.dianping.hotelorder.biz.utils;
+package cn.zh.blueshit.current;
 
 import com.google.common.base.Joiner;
 import com.google.common.util.concurrent.MoreExecutors;

@@ -2,6 +2,8 @@ package cn.blueshit.cn.test.jvm;
 
 /**
  * Created by zhaoheng on 16/12/6.
+ * VM options
+ * -Xmx1024m -Xms1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/Users/zhaoheng/shell/testshell/jvmtest
  */
 public class JavaHeapTest {
 
