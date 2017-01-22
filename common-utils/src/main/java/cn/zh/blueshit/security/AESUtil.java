@@ -43,11 +43,9 @@ public class AESUtil {
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
             //6.根据指定算法AES自成密码器
             Cipher cipher = Cipher.getInstance("AES");// 创建密码器
-
-            byte[] byteContent = content.getBytes("utf-8");
-
             cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
 
+            byte[] byteContent = content.getBytes("utf-8");
             byte[] result = cipher.doFinal(byteContent);
 
             return result; // 加密
