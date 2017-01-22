@@ -10,7 +10,7 @@ import java.util.concurrent.*;
  * Created by zhaoheng on 16/12/30.
  * 线程池执行服务对象.
  */
-public final class ExecutorServiceObject {
+public class ExecutorServiceObject {
 
     private final ThreadPoolExecutor threadPoolExecutor;
 

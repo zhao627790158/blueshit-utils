@@ -1,5 +1,8 @@
 package cn.blueshit.cn.test.current;
 
+import cn.zh.blueshit.current.ExecutorServiceObject;
+
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -53,16 +56,21 @@ public class BoundedBuffer<E> {
         return x;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         final BoundedBuffer<Integer> boundedBuffer = new BoundedBuffer<Integer>(10);
+        //boundedBuffer.put(5);
         Thread takser = new Thread() {
             @Override
             public void run() {
                 try {
-                    boundedBuffer.take();
-                    System.err.println("get--------");
+                    while (true){
+                        System.err.println("get--------begin");
+                        boundedBuffer.take();
+                        System.err.println("get--------end");
+                    }
                 } catch (InterruptedException e) {
                     System.err.println("interrputed");
+                    Thread.currentThread().interrupt();
                 }
             }
         };
@@ -74,6 +82,7 @@ public class BoundedBuffer<E> {
             takser.interrupt();
             takser.join(1000);
             System.err.println("error--------" + takser.isAlive());
+            System.err.println("error--------" + takser.isInterrupted());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -34,6 +34,48 @@ public class TestGson {
 
 
     @Test
+    public void test12() {
+        JSONObject jsonObject = JSONObject.parseObject("{\n" +
+                "    \"status\": \"success\",\n" +
+                "    \"data\": {\n" +
+                "        \"money_detail\": {\n" +
+                "            \"title\": \"退款金额\",\n" +
+                "            \"contents\": \"<span>798元</span>\"\n" +
+                "        },\n" +
+                "        \"account_detail\": {\n" +
+                "            \"title\": \"退回账户\",\n" +
+                "            \"contents\": [\n" +
+                "                \"美团余额\"\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        \"time_detail\": {\n" +
+                "            \"title\": \"到账时间\",\n" +
+                "            \"contents\": \"已到账\"\n" +
+                "        },\n" +
+                "        \"detail\": [\n" +
+                "            [\n" +
+                "                {\n" +
+                "                    \"title\": \"美团审核通过\",\n" +
+                "                    \"text\": null,\n" +
+                "                    \"time\": \"2015-11-11 15:34:58\",\n" +
+                "                    \"status\": 2\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"title\": \"已到账\",\n" +
+                "                    \"text\": null,\n" +
+                "                    \"time\": \"2015-11-13 11:34:26\",\n" +
+                "                    \"status\": 2\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        ],\n" +
+                "        \"promo_detail\": null\n" +
+                "    }\n" +
+                "}");
+        System.out.println(jsonObject.getJSONObject("data").getJSONArray("detail").getJSONArray(0).getJSONObject(0).getString("time"));
+    }
+
+
+    @Test
     public void test11() {
         String test = String.format("%s  %d", 1, 1);
         System.out.println(test);

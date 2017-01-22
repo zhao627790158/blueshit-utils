@@ -5,6 +5,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 import java.io.*;
+import java.net.URL;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ public class GuavaFile {
         Path path = testFile.toPath();
         //file:///Users/zhaoheng/IdeaProjects/mygithub/blueshit-utils/common-utils/test.txt
         System.out.println(path.toUri());
-        //file:///Users/zhaoheng/IdeaProjects/mygithub/blueshit-utils/common-utils/test.txt
+        //file:/Users/zhaoheng/IdeaProjects/mygithub/blueshit-utils/common-utils/test.txt
         System.out.println(path.toUri().toURL());
         System.setProperty("test", "value11");
 
@@ -59,6 +61,23 @@ public class GuavaFile {
             }
         }));
 
+        Path path1 = FileSystems.getDefault().getPath(separators("user/test111.txt"));
+        System.out.println(path1.toAbsolutePath());
+        System.out.println(GuavaFile.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        System.out.println(GuavaFile.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+
+    }
+
+    private static String separators(String path) {
+        StringBuilder ret = new StringBuilder();
+        for (char c : path.toCharArray()) {
+            if ((c == '/') || (c == '\\')) {
+                ret.append(File.separatorChar);
+            } else {
+                ret.append(c);
+            }
+        }
+        return ret.toString();
     }
 
 }
