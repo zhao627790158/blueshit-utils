@@ -13,7 +13,9 @@ public class BeanFactoryTest {
 
     @Test
     public void test2() {
-        System.out.println(5+12*(3+5)/7.0);
+        System.out.println(5 + 12 * (3 + 5) / 7.0);
+        //获取处理器的个数
+        System.out.println(Runtime.getRuntime().availableProcessors());
     }
 
     @Test

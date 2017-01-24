@@ -29,6 +29,7 @@ public class AESUtil {
 
             //1.构造密钥生成器，指定为AES算法,不区分大小写
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
+            //SecureRandom是生成安全随机数序列，password.getBytes()是种子，只要种子相同，序列就一样，所以解密只要有password就行
             //2.根据ecnodeRules规则初始化密钥生成器
             //生成一个128位的随机源,根据传入的字节数组
             SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
@@ -128,6 +129,9 @@ public class AESUtil {
         byte[] decryptResult = decrypt(decryptFrom, password);
 
         System.out.println("解密后：" + new String(decryptResult));
+
+        String key = "!@#$%^&*(!@#$%^&";
+        System.out.print(key.getBytes().length);
 
     }
 }
