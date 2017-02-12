@@ -24,6 +24,7 @@ public class TestRunTime {
             path = line;
         }
         System.out.println(new File(path).toURI().toURL());
+        System.out.println(new File(path).toURI().toURL().getProtocol());
         System.out.println(new File(path).toURI().toURL().getFile());
 
         System.out.print("\n");
