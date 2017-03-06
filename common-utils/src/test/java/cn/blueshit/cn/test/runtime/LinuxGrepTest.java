@@ -23,7 +23,7 @@ public class LinuxGrepTest {
             sb.append(line).append("\n");
         }
         System.out.println(sb.toString());
-        System.out.println(runScript("cat -n  " + sb.toString()));
+        //System.out.println(runScript("cat -n  " + sb.toString()));
 
     }
 

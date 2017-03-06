@@ -64,6 +64,10 @@ public class ServerTest {
                                 //BroadCast(selector, schannel, ("\nserver:" + msg + "\n"));
                                 //只回复给自己
                                 schannel.write(charset.encode(("\nserver:" + msg + "\n")));
+                                if(msg.equalsIgnoreCase("quit")){
+                                    schannel.close();
+                                    key.cancel();
+                                }
                             } else {
                                 //!!!一定要close不然服务端close_wait过多,会严重影响并发量
                                 //read返回-1说明客户端的数据发送完毕，并且主动的close socket。所以在这种场景下，你需要关闭socketChannel并且取消key，最好是退出当前函数。
