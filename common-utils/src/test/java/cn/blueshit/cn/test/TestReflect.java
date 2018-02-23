@@ -8,16 +8,18 @@ import cn.zh.blueshit.common.UnicodeUtil;
 import cn.zh.blueshit.security.HMACSHA1Utils;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import org.junit.Test;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by zhaoheng on 2016/6/13.
@@ -54,6 +56,8 @@ public class TestReflect {
         String nu = "\\u8bf7\\u6c42\\u5931\\u8d25\\uff0c\\u53c2\\u6570\\u9519\\u8bef";
         System.out.println(nu);
         System.out.println(UnicodeUtil.fromUnicodeString(nu));
+
+
     }
 
 
@@ -73,5 +77,40 @@ public class TestReflect {
         }
         System.out.println(Joiner.on(",,").join(objects));
     }
+
+    @Test
+    public void test1() {
+        ListSavingMethodCallback mc = new ListSavingMethodCallback();
+        ReflectionUtils.doWithMethods(TestReflect.class, mc, new ReflectionUtils.MethodFilter() {
+            public boolean matches(Method m) {
+                return Modifier.isProtected(m.getModifiers());
+            }
+        });
+        assertFalse(mc.getMethodNames().isEmpty());
+        assertTrue("Must find protected method on Object", mc.getMethodNames().contains("clone"));
+        assertTrue("Must find protected method on Object", mc.getMethodNames().contains("finalize"));
+        assertFalse("Public, not protected", mc.getMethodNames().contains("hashCode"));
+        assertFalse("Public, not protected", mc.getMethodNames().contains("absquatulate"));
+        System.out.println(mc.getMethods());
+    }
+
+    static class ListSavingMethodCallback implements ReflectionUtils.MethodCallback {
+        private List methodNames = new LinkedList();
+
+        private List methods = new LinkedList();
+
+        public void doWith(Method m) throws IllegalArgumentException, IllegalAccessException {
+            this.methodNames.add(m.getName());
+            this.methods.add(m);
+        }
+
+        public List getMethodNames() {
+            return this.methodNames;
+        }
+
+        public List getMethods() {
+            return this.methods;
+        }
+    };
 
 }

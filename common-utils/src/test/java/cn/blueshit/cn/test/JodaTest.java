@@ -6,7 +6,6 @@ import org.joda.time.Days;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -68,8 +67,14 @@ public class JodaTest {
         printf(in.toString(yyyyMMdd));
         Date date1 = DateUtils.addDays(out.toDate(), -1);
         DateTime dateTime2 = out.minusDays(1);
-        printf("in+" + in + "out+" + out + "date1+" + date1+"out:"+dateTime2);
-
+        printf("in+" + in + "out+" + out + "date1+" + date1 + "out:" + dateTime2);
+        DateTime now = new DateTime();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        System.out.println(now.withTimeAtStartOfDay());
+        System.out.println(now.millisOfDay().withMaximumValue());
+        System.out.println(now.secondOfDay().withMaximumValue());
+        System.out.println(now.secondOfDay().withMinimumValue());
+        System.out.println(now.toString(dateTimeFormatter));
 
     }
 }

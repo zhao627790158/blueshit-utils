@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configs xmlns="http://cn.blueShit.com/schema/mybatis-sharding"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://cn.blueShit.com/schema/mybatis-sharding mybatis-sharding-config.xsd">
+	
+	<!-- 表名对应分表策略 -->
+	<strategy logicTable="testTable" class="java.util.Date"/>
+
+
+</configs>

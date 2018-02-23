@@ -45,6 +45,8 @@ public class TestCommand {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        helloWorldCommand.getExecutionException().printStackTrace();
+        helloWorldCommand.getFailedExecutionException().printStackTrace();
 
         //getFailedExecutionException pass isFailedExecution
         /*if (null == helloWorldCommand.getExecutionException() || null == helloWorldCommand.getExecutionException().getMessage()) {

@@ -41,10 +41,24 @@ public class HelloWorldCommand extends HystrixCommand<String> {
     @Override
     protected String run() throws Exception {
 
-        /*Thread.sleep(500);
-        int i = 1 / 0;*/
-        return "Hello " + name + " thread:" + Thread.currentThread().getName() + " group"
-                + this.getCommandGroup().name() + " key" + this.getCommandKey().name();
+       /* //有异常并不会中断主进程,会走fallback
+        *//*Thread.sleep(500);
+        int i = 1 / 0;*//*
+       *//* return "Hello " + name + " thread:" + Thread.currentThread().getName() + " group"
+                + this.getCommandGroup().name() + " key" + this.getCommandKey().name();*//*
+        Object object = new Long(1);
+        if(null==object) throw new RuntimeException("xxx");
+        try{
+            Thread.currentThread().sleep(2000);
+        }catch (Exception e){
+            System.err.println("exception");
+        }finally {
+            System.err.println("finally");
+        }
+        return object.getClass().toString();*/
+
+        Thread.sleep(10000);
+        return "";
     }
 
     @Override
@@ -59,11 +73,12 @@ public class HelloWorldCommand extends HystrixCommand<String> {
         HelloWorldCommand helloWorldCommand = null;
         try {
             helloWorldCommand=new HelloWorldCommand("group", "commandKey", 100);
+            helloWorldCommand.execute();
         } catch (Throwable throwable) {
             log.error("11111111111");
         }
 
-        //观察执行状态
+       /* //观察执行状态
         Observable<String> observe = helloWorldCommand.observe();
         Subscription subscribe = observe.subscribe(new Action1<String>() {
             @Override
@@ -73,10 +88,10 @@ public class HelloWorldCommand extends HystrixCommand<String> {
         });
         Thread.sleep(1000);
         //String result = helloWorldCommand.execute();
-       /* //使用execute()同步调用代码,效果等同于:helloWorldCommand.queue().get();
+       *//* //使用execute()同步调用代码,效果等同于:helloWorldCommand.queue().get();
         String result = helloWorldCommand.execute();
         System.out.println("result=" + result);
-        */
+        *//*
 
         HelloWorldCommand helloWorldCommand1 = new HelloWorldCommand("group", "commandKey", 100);
         Observable<String> observe1 = helloWorldCommand1.observe();
@@ -103,7 +118,7 @@ public class HelloWorldCommand extends HystrixCommand<String> {
         //get操作不能超过command定义的超时时间,默认:1秒
         //result = future.get(100, TimeUnit.MILLISECONDS);
         // System.out.println("result=" + result);
-        System.out.println("mainThread=" + Thread.currentThread().getName());
+        System.out.println("mainThread=" + Thread.currentThread().getName());*/
     }
 
 }

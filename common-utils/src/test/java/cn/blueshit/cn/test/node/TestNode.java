@@ -27,6 +27,28 @@ public class TestNode {
         return head;//反转链表
     }
 
+    public static Node reverse2(Node head) {
+        if (null == head) {
+            return head;
+        }
+        Node pre = head;
+        Node cur = head.getNextNode();
+        Node temp = null;
+        while (null != cur) {
+            //保留下一节点
+            temp = cur.getNextNode();
+            //反转指针
+            cur.setNextNode(pre);
+            //移动指针
+            pre = cur;
+            cur = temp;
+        }
+        //将原链表的头节点的下一个节点置为null，再将反转后的头节点赋给head
+        head.setNextNode(null);
+        head = pre;
+        return head;
+    }
+
 
     public static void main(String[] args) {
         Node head = new Node(0);
@@ -49,7 +71,7 @@ public class TestNode {
             h = h.getNextNode();
         }
         //调用反转方法
-        head = reverse(head);
+        head = reverse2(head);
         System.out.println("\n**************************");
         //打印反转后的结果
         while (null != head) {

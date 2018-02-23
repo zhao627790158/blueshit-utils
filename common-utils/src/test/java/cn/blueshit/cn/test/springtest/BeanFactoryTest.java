@@ -1,5 +1,6 @@
 package cn.blueshit.cn.test.springtest;
 
+import com.google.common.base.CharMatcher;
 import org.junit.Test;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -16,6 +17,9 @@ public class BeanFactoryTest {
         System.out.println(5 + 12 * (3 + 5) / 7.0);
         //获取处理器的个数
         System.out.println(Runtime.getRuntime().availableProcessors());
+
+        System.out.println(CharMatcher.anyOf("[]`'\"").removeFrom("select * from `order` order \"\""));
+
     }
 
     @Test

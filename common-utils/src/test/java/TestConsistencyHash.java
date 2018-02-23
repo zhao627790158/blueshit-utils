@@ -1,8 +1,7 @@
-import java.io.UnsupportedEncodingException;
+import com.google.common.collect.Maps;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
@@ -15,7 +14,7 @@ public class TestConsistencyHash {
     //真实服务器节点信息
     private List<Object> shards = new ArrayList();
     //设置虚拟节点数目
-    private int VIRTUAL_NUM = 4;
+    private int VIRTUAL_NUM = 160;
 
     public void init() {
         shards.add("192.168.0.0-服务器0");
@@ -79,7 +78,7 @@ public class TestConsistencyHash {
         h ^= h >>> r;
 
         buf.order(byteOrder);
-        return h;
+        return Math.abs(h);
     }
 
     /**
@@ -127,6 +126,7 @@ public class TestConsistencyHash {
      */
     public void printMap() {
         System.out.println(nodes);
+        System.out.println(nodes.size());
     }
 
 
@@ -147,9 +147,25 @@ public class TestConsistencyHash {
         TestConsistencyHash hash = new TestConsistencyHash();
         hash.init();
         hash.printMap();
-        //循环50次，是为了取50个数来测试效果，当然也可以用其他任何的数据来测试
-        for (int i = 0; i < 50; i++) {
-            System.out.println(hash.getShardInfo(hash.hash(i + "")));
+        System.out.println(hash.getShardInfo(hash.hash(Long.MAX_VALUE + "")));
+        System.out.println("----hash 测试");
+        int orderId = 675318950;
+        Map<String, Integer> countMap = Maps.newHashMap();
+
+        for (int i = 0; i < 1000000; i++) {
+            Object shardInfo = hash.getShardInfo(hash.hash(String.valueOf(orderId)));
+            //System.out.println(shardInfo);
+            if (countMap.containsKey(shardInfo.toString())) {
+                Integer integer = countMap.get(shardInfo.toString());
+                countMap.put(shardInfo.toString(), integer + 1);
+            }else{
+                countMap.put(shardInfo.toString(), 1);
+            }
+            orderId++;
         }
+        System.out.println(countMap);
+
+
+
     }
 }

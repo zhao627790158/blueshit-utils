@@ -1,16 +1,21 @@
 package cn.blueshit.cn.test.command;
 
+import cn.blueshit.cn.test.bean.TestBean;
 import cn.blueshit.cn.test.bean.User;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Predicate;
@@ -19,7 +24,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 import org.junit.experimental.theories.suppliers.TestedOn;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.*;
@@ -237,6 +244,23 @@ public class TestGson {
     }
 
     @Test
+    public void test21() throws IllegalAccessException {
+        int i = 0;
+        TestBean testBean = new TestBean();
+        Field[] declaredFields = testBean.getClass().getDeclaredFields();
+        for (Field field : declaredFields) {
+            field.setAccessible(true);
+            field.setInt(testBean, i++);
+        }
+        String s = JSON.toJSONString(testBean);
+        System.out.println(s);
+        ParserConfig.getGlobalInstance().setAsmEnable(false);
+        TestBean testBean1 = JSON.parseObject(s, TestBean.class);
+        System.out.println(testBean1);
+    }
+
+
+    @Test
     public void test3() throws ParseException {
         Date date1 = new Date();//60998400
         Date date2 = DateUtils.parseDate("2014-09-11", "yyyy-MM-dd");
@@ -339,6 +363,25 @@ public class TestGson {
         public void setList(List<String> list) {
             this.list = list;
         }
+    }
+
+    @Data
+    @AllArgsConstructor
+    class B {
+        private A a;
+    }
+
+    @Data
+    class A {
+        private B b;
+    }
+
+    @Test
+    public void test43() {
+        A a = new A();
+        B b = new B(a);
+        a.setB(b);
+        System.out.println(JSON.toJSONString(a, SerializerFeature.DisableCircularReferenceDetect));
     }
 
 

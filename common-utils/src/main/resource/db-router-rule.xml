@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<router-rule>
+
+    <table-shard-rule table="order">
+        <shard-dimension dbRule="(#userId#.longValue() % 32).intdiv(8)"
+                         dbIndexes="Group_00,Group_01,Group_02,Group_03"
+                         tbRule="#orderId#.longValue() % 8"
+                         tbSuffix="everydb:[_00,_07]"
+                         isMaster="true">
+        </shard-dimension>
+
+    </table-shard-rule>
+
+</router-rule>
+

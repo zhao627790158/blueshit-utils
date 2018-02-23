@@ -1,5 +1,7 @@
 package cn.blueshit.cn.test.datastructures;
 
+import java.util.Random;
+
 /**
  * Created by zhaoheng on 16/11/3.
  */
@@ -7,7 +9,11 @@ public class MergeSort implements BlSort {
 
 
     public static void main(String[] args) {
-        int[] data = new int[]{5, 3, 6, 2, 1, 9, 4, 8, 7};
+        int[] data = new int[1000];
+
+        for (int i = 0; i < 1000; i++) {
+            data[i] = new Random().nextInt(20000);
+        }
         print(data);
         MergeSort mergeSort = new MergeSort();
         mergeSort.mergeSort(data);

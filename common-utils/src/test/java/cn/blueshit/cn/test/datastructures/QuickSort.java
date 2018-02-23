@@ -56,4 +56,26 @@ public class QuickSort implements BlSort {
         return left;
     }
 
+    public int quicksort(int[] a, int left, int right) {
+        int temp = a[left];
+        while (left < right) {
+            while (left < right && a[right] >= temp) {
+                right--;
+            }
+            if (left < right) {
+                a[left] = a[right];
+                left++;
+            }
+            while (left < right && a[left] < temp) {
+                left++;
+            }
+            if (left < right) {
+                a[right] = a[left];
+                right--;
+            }
+        }
+        a[left] = temp;
+        return left;
+    }
+
 }
