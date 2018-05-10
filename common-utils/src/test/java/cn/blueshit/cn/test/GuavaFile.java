@@ -1,15 +1,11 @@
 package cn.blueshit.cn.test;
 
-import ch.qos.logback.core.joran.action.NewRuleAction;
-import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
-import java.io.*;
-import java.net.URL;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zhaoheng on 17/1/1.

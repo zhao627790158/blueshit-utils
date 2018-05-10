@@ -1,8 +1,10 @@
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.Maps;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zhaoheng on 16/10/5.
@@ -14,7 +16,7 @@ public class TestConsistencyHash {
     //真实服务器节点信息
     private List<Object> shards = new ArrayList();
     //设置虚拟节点数目
-    private int VIRTUAL_NUM = 160;
+    private int VIRTUAL_NUM = 100;
 
     public void init() {
         shards.add("192.168.0.0-服务器0");
@@ -23,6 +25,7 @@ public class TestConsistencyHash {
         shards.add("192.168.0.3-服务器3");
         shards.add("192.168.0.4-服务器4");
 
+        Stopwatch stopwatch = Stopwatch.createStarted();
         nodes = new TreeMap<Long, Object>();
         for (int i = 0; i < shards.size(); i++) {
             Object shardInfo = shards.get(i);
@@ -30,6 +33,7 @@ public class TestConsistencyHash {
                 nodes.put(hash("SHARD-" + i + "-NODE-" + j), shardInfo);
             }
         }
+        System.out.println("hash环初始化时间" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
     /**
@@ -39,8 +43,9 @@ public class TestConsistencyHash {
      * http://murmurhash.googlepages.com/
      */
     private Long hash(String key) {
+        return Math.abs(MurmurHash.hash64(key));
 
-        ByteBuffer buf = ByteBuffer.wrap(key.getBytes());
+        /*ByteBuffer buf = ByteBuffer.wrap(key.getBytes());
         int seed = 0x1234ABCD;
 
         ByteOrder byteOrder = buf.order();
@@ -78,7 +83,7 @@ public class TestConsistencyHash {
         h ^= h >>> r;
 
         buf.order(byteOrder);
-        return Math.abs(h);
+        return Math.abs(h);*/
     }
 
     /**
@@ -142,11 +147,30 @@ public class TestConsistencyHash {
         return nodes.get(key);
     }
 
+    /*
+    *
+    * {192.168.0.1-服务器1=170645, 192.168.0.4-服务器4=224088, 192.168.0.0-服务器0=209504, 192.168.0.3-服务器3=194750, 192.168.0.2-服务器2=201013}
+    *
+    * {192.168.0.1-服务器1=205355, 192.168.0.4-服务器4=227321, 192.168.0.0-服务器0=181079, 192.168.0.3-服务器3=203204, 192.168.0.2-服务器2=183041}
+    * {192.168.0.1-服务器1=186570, 192.168.0.4-服务器4=214629, 192.168.0.0-服务器0=204651, 192.168.0.3-服务器3=197160, 192.168.0.2-服务器2=196990}
+    * {192.168.0.1-服务器1=186570, 192.168.0.4-服务器4=214629, 192.168.0.0-服务器0=204651, 192.168.0.3-服务器3=197160, 192.168.0.2-服务器2=196990}
+    *
+    * {192.168.0.1-服务器1=199503, 192.168.0.4-服务器4=187101, 192.168.0.0-服务器0=219786, 192.168.0.3-服务器3=186976, 192.168.0.2-服务器2=206634}
+    *
+    * {192.168.0.1-服务器1=199503, 192.168.0.4-服务器4=187101, 192.168.0.0-服务器0=219786, 192.168.0.3-服务器3=186976, 192.168.0.2-服务器2=206634}
+
+
+
+
+
+    * */
+
     public static void main(String[] args) {
         Random ran = new Random();
         TestConsistencyHash hash = new TestConsistencyHash();
         hash.init();
         hash.printMap();
+        System.out.println(hash.hash("1"));
         System.out.println(hash.getShardInfo(hash.hash(Long.MAX_VALUE + "")));
         System.out.println("----hash 测试");
         int orderId = 675318950;
@@ -168,4 +192,6 @@ public class TestConsistencyHash {
 
 
     }
+
+
 }

@@ -4,13 +4,11 @@ import cn.zh.blueshit.current.ExecutorServiceObject;
 import cn.zh.blueshit.idgenerator.AbstractClock;
 import cn.zh.blueshit.idgenerator.CommonSelfIdGenerator;
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.Lists;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.math3.util.FastMath;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;

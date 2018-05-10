@@ -81,14 +81,16 @@ public class DefaultDbRouterImpl implements DbRouter {
                         String tableIndex = getFormateTableIndex(dbRuleSet1.getTableIndexStyle(), tbIndex);
                         DbContextHolder.setTableIndex(tableIndex);
                         log.info("tableIndex:{}", tableIndex);
-                    } else if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_DB) {
-                        mode = dbRuleSet.getDbNumber();
-                        dbIndex = routeFieldInt % mode;
-                    } else if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_TABLE) {
-                        tbIndex = routeFieldInt % dbRuleSet1.getTableNumber();
-                        String tableIndex = getFormateTableIndex(dbRuleSet1.getTableIndexStyle(), tbIndex);
-                        DbContextHolder.setTableIndex(tableIndex);
-                        log.info("tableIndex:{}", tableIndex);
+                    } else {
+                        if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_DB) {
+                            mode = dbRuleSet.getDbNumber();
+                            dbIndex = routeFieldInt % mode;
+                        } else if (dbRuleSet1.getRouteType() == DbRuleSet.ROUTE_TYPE_TABLE) {
+                            tbIndex = routeFieldInt % dbRuleSet1.getTableNumber();
+                            String tableIndex = getFormateTableIndex(dbRuleSet1.getTableIndexStyle(), tbIndex);
+                            DbContextHolder.setTableIndex(tableIndex);
+                            log.info("tableIndex:{}", tableIndex);
+                        }
                     }
                     dbKey = dbRuleSet.getDbKeyArray().get(Long.valueOf(dbIndex).intValue());
                     log.info("dbkey{}", dbKey);

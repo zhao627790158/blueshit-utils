@@ -38,8 +38,8 @@ public class DelayCache<K, V> {
         while (true) {
             DelayedItem<K> delayedItem = queue.poll();//弹出head,只有到期的才会弹出
             if (delayedItem != null) {
-                map.remove(delayedItem.getT());
-                System.out.println(" remove " + delayedItem.getT() + " from cache");
+                V remove = map.remove(delayedItem.getT());
+                //System.out.println(" remove " + delayedItem.getT() + " from cache value" + remove.toString());
             }
             try {
                 Thread.sleep(300);
@@ -59,11 +59,11 @@ public class DelayCache<K, V> {
         for (int i = 0; i < cacheNumber; i++) {
             liveTime = random.nextInt(3000);
             System.out.println(i + "  " + liveTime);
-            cache.put(i + "", i, random.nextInt(liveTime));
+            cache.put(i + "-", i, random.nextInt(liveTime));
             if (random.nextInt(cacheNumber) > 7) {
                 liveTime = random.nextInt(3000);
                 System.out.println(i + "  " + liveTime);
-                cache.put(i + "", i, random.nextInt(liveTime));
+                cache.put(i + "-", i, random.nextInt(liveTime));
             }
         }
 
@@ -94,9 +94,9 @@ class DelayedItem<T> implements Delayed {
         if (o == this) return 0;
         if (o instanceof DelayedItem) {
             DelayedItem<T> tmpDelayedItem = (DelayedItem<T>) o;
-            if (liveTime > tmpDelayedItem.liveTime) {
+            if (removeTime > tmpDelayedItem.removeTime) {
                 return 1;
-            } else if (liveTime == tmpDelayedItem.liveTime) {
+            } else if (removeTime == tmpDelayedItem.removeTime) {
                 return 0;
             } else {
                 return -1;
