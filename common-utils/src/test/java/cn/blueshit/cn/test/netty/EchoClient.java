@@ -1,3 +1,4 @@
+/*
 package cn.blueshit.cn.test.netty;
 
 import io.netty.bootstrap.Bootstrap;
@@ -13,9 +14,11 @@ import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
 
+*/
 /**
  * Created by zhaoheng on 17/5/2.
- */
+ *//*
+
 public class EchoClient {
     private final String host;
     private final int port;
@@ -68,23 +71,29 @@ public class EchoClient {
 
     @ChannelHandler.Sharable
     class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
-        /**
+        */
+/**
          * 此方法会在连接到服务器后被调用
-         */
+         *//*
+
         public void channelActive(ChannelHandlerContext ctx) {
             ctx.write(Unpooled.copiedBuffer("Netty rocks!", CharsetUtil.UTF_8));
         }
 
-        /**
+        */
+/**
          * 此方法会在接收到服务器数据后调用
-         */
+         *//*
+
         public void channelRead0(ChannelHandlerContext ctx, ByteBuf in) {
             System.out.println("Client received: " + ByteBufUtil.hexDump(in.readBytes(in.readableBytes())));
         }
 
-        /**
+        */
+/**
          * 捕捉到异常
-         */
+         *//*
+
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
             cause.printStackTrace();
             ctx.close();
@@ -92,3 +101,4 @@ public class EchoClient {
 
     }
 }
+*/
