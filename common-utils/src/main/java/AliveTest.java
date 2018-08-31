@@ -9,7 +9,7 @@ public class AliveTest {
 
 
     @OnMethod(
-            clazz = "com.meituan.hotel.order.xpush.web.controller.AliveController",
+            clazz = "com.xxx.xpush.web.controller.AliveController",
             method = "test",
             location = @Location(Kind.ENTRY)
     )

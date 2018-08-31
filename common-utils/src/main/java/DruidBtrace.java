@@ -11,7 +11,7 @@ import static com.sun.btrace.BTraceUtils.println;
 public class DruidBtrace {
 
     @OnMethod(
-            clazz = "com.meituan.hotel.order.thrift.service.impl.OrderForSettlementServiceImpl",
+            clazz = "com.xxxxx.service.impl.OrderForSettlementServiceImpl",
             method = "getOrderDetailByOrderIds4Settlement",
             location = @Location(Kind.ENTRY)
     )
