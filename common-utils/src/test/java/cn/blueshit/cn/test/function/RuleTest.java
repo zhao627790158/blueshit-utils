@@ -11,7 +11,6 @@ public class RuleTest {
         AllOrLogicRule<Context> contextAllAndLogicRule = orRule(RuleFactory.orderType, orRule(RuleFactory.tradeType));
         boolean mapping = contextAllAndLogicRule.mapping(context);
         System.out.println(mapping);
-        System.out.println(mapping);
     }
 
 
