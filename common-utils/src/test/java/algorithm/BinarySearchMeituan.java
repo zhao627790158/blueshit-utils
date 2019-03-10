@@ -14,6 +14,9 @@ public class BinarySearchMeituan {
         int[] arr = {1, 2, 3, 4, 5, 5, 9, 10, 6, 4, 3, 2};
         System.out.println(arr.length);
         System.out.println(getMax(arr, 0, arr.length - 1));
+        int[] temp = new int[]{1, 2, 3, 5, 6, 9, 16, 121};
+        System.out.println(binarySearch(temp, 0, temp.length - 1, 9));
+        System.out.println(binarySearch2(temp, 0, temp.length - 1, 9));
     }
 
     private static void search(int[] arr) {
@@ -60,6 +63,36 @@ public class BinarySearchMeituan {
         }
 
         return arr[low];
+    }
+
+    public static int binarySearch(int[] arr, int left, int right, int k) {
+        if (left > right) {
+            return -1;
+        }
+        int mid = (left + right) / 2;
+        if (k == arr[mid]) {
+            return mid;
+        }
+        if (k > arr[mid]) {
+            return binarySearch(arr, mid + 1, right, k);
+        } else {
+            return binarySearch(arr, left, mid - 1, k);
+        }
+    }
+
+    public static int binarySearch2(int[] arr, int left, int right, int k) {
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (k == arr[mid]) {
+                return mid;
+            }
+            if (k > arr[mid]) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
     }
 
 }
